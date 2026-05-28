@@ -33,7 +33,7 @@ export default function Index(){
 
         <View style={styles.container}>
             <Image 
-            source={require ("@/assets/img1.png")}
+            source={require ("@/assets/logoatlas.png")}
             style={styles.illustration}
             />
             
@@ -83,9 +83,11 @@ const styles = StyleSheet.create({
    title: {
     fontSize: 32,
     fontWeight: 900,
+    color : "#000000",
    },
    subtitle: {
     fontSize: 16,
+    color : "#000000",
    },
    form: {
     marginTop: 24,

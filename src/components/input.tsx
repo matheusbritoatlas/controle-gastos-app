@@ -1,7 +1,13 @@
 import { StyleSheet, TextInput, TextInputProps } from "react-native"
 
 export function Input ({...rest }: TextInputProps) {
-    return <TextInput style ={styles.Input} {...rest} />
+    return (
+    <TextInput 
+    style ={styles.Input} 
+    placeholderTextColor="#000"
+    {...rest} 
+    />
+)
 
 }
 
@@ -14,7 +20,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         fontSize: 16,
         paddingLeft: 12,
+        color : "#000000",
  
     },
 })
-

@@ -19,7 +19,7 @@ export default function singup(){
 
         <View style={styles.container}>
             <Image 
-            source={require ("@/assets/img2.png")}
+            source={require ("@/assets/logoatlas.png")}
             style={styles.illustration}
             />
 
@@ -63,10 +63,14 @@ const styles = StyleSheet.create({
    },
    title: {
     fontSize: 32,
-    fontWeight: 900,
+    fontWeight: "900",
+    color : "#000000",
+
    },
    subtitle: {
     fontSize: 16,
+    color : "#000000",
+
    },
    form: {
     marginTop: 24,
@@ -81,7 +85,7 @@ const styles = StyleSheet.create({
    footerlink: {
 
     color: "#032ad7",
-    fontWeight: 700,
+    fontWeight: "700",
 
    },
 })
