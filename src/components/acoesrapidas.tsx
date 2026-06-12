@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { Button } from "./Button";
+import CardAcao from "./CardAcao";
 
 function AcoesRapidas () {   
 
@@ -10,12 +10,18 @@ function AcoesRapidas () {
         <Text> Ações Rápidas </Text>
 
         <View  style={{ flexDirection: "row", }}>
-            
+
                 {/* Botões de ações rápidas */}
 
-            <Button label="Adicionar Entrada" />
+            <CardAcao  
+            simbolo="+" 
+            texto="Adicionar Entrada"
+            onPress={() => console.log("Adicionar Entrada")} />
 
-            <Button label="Adicionar Saída" />
+            <CardAcao 
+            simbolo="-" 
+            texto="Adicionar Saída"
+            onPress={() => console.log("Adicionar Saída")} />
 
         </View>
 
@@ -23,4 +29,5 @@ function AcoesRapidas () {
 
     );
 }
+
 export default AcoesRapidas;
