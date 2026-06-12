@@ -10,10 +10,10 @@ import { Link } from "expo-router";
 
 export default function Index(){
     const [email, setEmail] = useState(" ")
-    const [passowrd, setPassowrd] = useState(" ")
+    const [password, setPassword] = useState(" ")
     
     function handleSignIn(){
-        if(!email.trim() || !passowrd.trim()){
+        if(!email.trim() || !password.trim()){
          return Alert.alert("Entrar", "Preencha o e-mail e a senha para continuar! " )
         }
 
@@ -49,7 +49,7 @@ export default function Index(){
 
              <Input placeholder="Senha" 
              secureTextEntry 
-             onChangeText={setPassowrd} 
+             onChangeText={setPassword} 
              />
 
 
