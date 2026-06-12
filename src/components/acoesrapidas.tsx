@@ -5,13 +5,13 @@ function AcoesRapidas () {
 
  return (
 
-    <View>{/* Ações Rápidas */}
+    <View> {/* Ações Rápidas */}
 
         <Text> Ações Rápidas </Text>
 
-        <View  style={{ flexDirection: "row", }}>
+        <View  style={{ flexDirection: "row", justifyContent: "space-between" }}>  {/* Botões de ações rápidas */}
 
-                {/* Botões de ações rápidas */}
+               
 
             <CardAcao  
             simbolo="+" 

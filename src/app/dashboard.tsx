@@ -1,23 +1,31 @@
-import AcoesRapidas from "@/components/acoesrapidas";
 
-import CardSaldo from "@/components/CardSaldo";
+import { View } from "react-native";
+import CardSaldo from "../components/CardSaldo";
+import HeaderDashBoard from "../components/HeaderDashBoard";
+import AcoesRapidas from "../components/acoesrapidas";
 
-import { Text, View } from "react-native";
 
 function Dashboard() {
 
   return (
     
-<View> {/* inicio dashboard */}
+<View style={{ paddingHorizontal: 20, marginTop: 30}}> {/* inicio dashboard */}
 
-  <Text> Olá,</Text>
-  <Text> Usuário</Text>
+    
+    <HeaderDashBoard /> {/* importado do HeaderDashBoard */}
 
-    <AcoesRapidas/> 
+  <View style={{ marginTop: 20, }}> {/* view card saldo */}
 
-    {/* importado do CardSaldo */}
+    <CardSaldo /> {/* importado do CardSaldo */}
 
-      <CardSaldo /> 
+    </View>
+
+    <View style={{ marginTop: 20, }}> {/* view ações rápidas */}
+
+    <AcoesRapidas/>  {/* importado do AcoesRapidas */}
+
+    </View>
+
     
     </View>
 

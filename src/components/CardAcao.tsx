@@ -35,7 +35,7 @@ function CardAcao({simbolo, texto, ...rest}: CardAcaoProps) { // CardAcao
 const styles = StyleSheet.create({
     container: {
 
-        width: 180,
+        width: 160,
         height: 100,
         borderWidth: 1,
 

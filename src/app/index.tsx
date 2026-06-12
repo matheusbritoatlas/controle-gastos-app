@@ -6,7 +6,7 @@ import { Input } from "@/components/input";
 
 import { Button } from "@/components/Button";
 
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 
 export default function Index(){
     const [email, setEmail] = useState("")
@@ -18,6 +18,7 @@ export default function Index(){
         }
 
         Alert.alert("Bem-vindo", `Login realizado com ${email}`)
+        router.push("/dashboard")
     }
 
     
