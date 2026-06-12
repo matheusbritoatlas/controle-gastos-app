@@ -1,6 +1,9 @@
 import AcoesRapidas from "@/components/acoesrapidas";
+
 import CardSaldo from "@/components/CardSaldo";
+
 import { Text, View } from "react-native";
+
 function Dashboard() {
 
   return (

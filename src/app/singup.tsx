@@ -23,8 +23,8 @@ export default function singup(){
             style={styles.illustration}
             />
 
-            <Text style= {styles.title}>Cadastre</Text>
-            <Text style= {styles.subtitle}>Crie sua conta para acessar.</Text>
+            <Text style= {styles.title}>Cadastrar</Text>
+            <Text style= {styles.subtitle}>Crie uma conta para acessar o aplicativo.</Text>
             <View style={ styles.form}>
             <Input placeholder= "Nome" />
             <Input placeholder= "E-mail" keyboardType="email-address" />
@@ -35,11 +35,9 @@ export default function singup(){
 
 
             <Text style={styles.footerText}>
-                Ja Tem uma conta?{" "}
+                Já tem uma conta?{" "}
                  <Link href="/" style={styles.footerlink}>  
                  Entre aqui.
-
-
                     </Link>
                 </Text>
             </View> 
@@ -55,38 +53,33 @@ const styles = StyleSheet.create({
         backgroundColor : "#FDFDFD",
         padding: 32, 
    },
-   illustration: {
-    width: "100%",
-    height : 300,
-    resizeMode: "contain",
-    marginTop: 62,
+    illustration: {
+        width: "100%",
+        height : 300,
+        resizeMode: "contain",
+        marginTop: 62,
    },
-   title: {
-    fontSize: 32,
-    fontWeight: "900",
-    color : "#000000",
-
+    title: {
+        fontSize: 32,
+        fontWeight: "900",
+        color : "#000000",
    },
-   subtitle: {
-    fontSize: 16,
-    color : "#000000",
-
+    subtitle: {
+        fontSize: 16,
+        color : "#000000",
    },
-   form: {
-    marginTop: 24,
-    gap: 12,
+    form: {
+        marginTop: 24,
+        gap: 12,
    },
-   footerText: {
-    textAlign: "center",
-    marginTop: 24,
-    color: "#585860"
+    footerText: {
+        textAlign: "center",
+        marginTop: 24,
+        color: "#585860"
    },
-
-   footerlink: {
-
-    color: "#032ad7",
-    fontWeight: "700",
-
+    footerlink: {
+        color: "#032ad7",
+        fontWeight: "700",
    },
 })
 

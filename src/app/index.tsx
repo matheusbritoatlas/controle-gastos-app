@@ -9,8 +9,8 @@ import { Button } from "@/components/Button";
 import { Link } from "expo-router";
 
 export default function Index(){
-    const [email, setEmail] = useState(" ")
-    const [password, setPassword] = useState(" ")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
     
     function handleSignIn(){
         if(!email.trim() || !password.trim()){
@@ -61,7 +61,7 @@ export default function Index(){
                 <Link href="/singup" style={styles.footerlink} >Cadastre-se aqui.
                     </Link>
                 </Text>
-            </View> 
+        </View> 
         </ScrollView>
         </KeyboardAvoidingView>
     )
