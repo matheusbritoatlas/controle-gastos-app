@@ -20,7 +20,7 @@ function Dashboard() {
 
     </View>
 
-    <View style={{ marginTop: 20, }}> {/* view ações rápidas */}
+    <View style={{ marginTop: 40, }}> {/* view ações rápidas */}
 
     <AcoesRapidas/>  {/* importado do AcoesRapidas */}
 

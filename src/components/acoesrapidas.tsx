@@ -16,11 +16,13 @@ function AcoesRapidas () {
             <CardAcao  
             simbolo="+" 
             texto="Adicionar Entrada"
+            tipo = "Entrada"
             onPress={() => console.log("Adicionar Entrada")} />
 
             <CardAcao 
             simbolo="-" 
             texto="Adicionar Saída"
+            tipo = "Saída"
             onPress={() => console.log("Adicionar Saída")} />
 
         </View>

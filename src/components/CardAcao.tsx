@@ -1,12 +1,13 @@
-import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View, } from 'react-native';
 
 type CardAcaoProps = TouchableOpacityProps & {
     simbolo: string
     texto: string
+    tipo: "Entrada" | "Saída"
 }
 
 
-function CardAcao({simbolo, texto, ...rest}: CardAcaoProps) { // CardAcao
+function CardAcao({simbolo, texto, tipo, ...rest }: CardAcaoProps) { // CardAcao
 
 
     return (    
@@ -17,7 +18,7 @@ function CardAcao({simbolo, texto, ...rest}: CardAcaoProps) { // CardAcao
             activeOpacity={0.1}
              {...rest}>
 
-            <View style={styles.circulo}>  
+            <View style={tipo === "Entrada" ? styles.circuloEntrada : styles.circuloSaida}>  
 
                 <Text style={styles.simbolo}>
                     {simbolo}
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     container: {
 
         width: 160,
-        height: 100,
+        height: 80,
         borderWidth: 1,
 
         alignItems: "center",
@@ -50,16 +51,27 @@ const styles = StyleSheet.create({
             fontWeight: "bold",
     },
 
-        circulo: {
+        circuloEntrada: {
 
-            width: 50,
-            height: 50,
-            backgroundColor: "lightgray",
-            borderRadius: 25,
+            width: 40,
+            height: 40,
+            backgroundColor: "#b6fdb6",
+            borderRadius: 20,
 
             alignItems: "center",
             justifyContent: "center",
         },
+         circuloSaida: {
+
+            width: 40,
+            height: 40,
+            backgroundColor: "#f58688",
+            borderRadius: 20,
+
+            alignItems: "center",
+            justifyContent: "center",
+        },
+
 
 });  
 
