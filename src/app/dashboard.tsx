@@ -1,6 +1,6 @@
 
 import EvolucaoFinanceira from "@/components/EvolucaoFinanceira";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CardSaldo from "../components/CardSaldo";
 import HeaderDashBoard from "../components/HeaderDashBoard";
@@ -10,12 +10,15 @@ import AcoesRapidas from "../components/acoesrapidas";
 
 function Dashboard() {
 
+    const meses= ["Jan","Fev","Mar","Abr","Mai"]
+    const valores= [500,800,700,1200,3239]
+
   return (
 
  <SafeAreaView style={{ flex: 1, backgroundColor: "#F3F4A6" }}
   edges={["top"]}>
     
-  <View style={{backgroundColor:  "#ffffff", flex: 2 }}> {/* inicio dashboard */}
+  <ScrollView style={{backgroundColor:  "#ffffff", flex: 1 }}> {/* inicio dashboard */}
 
     <View style={styles.TopDashboard}> 
     
@@ -33,11 +36,18 @@ function Dashboard() {
 
     <AcoesRapidas/>  {/* importado do AcoesRapidas */}
 
-    </View>
+    </View >
 
-     <EvolucaoFinanceira/> 
+    <View style={{ marginTop: 30, paddingHorizontal: 20 }}>
 
-    </View>
+     <EvolucaoFinanceira
+   labels={meses}
+   dados={valores}
+    /> 
+     
+     </View>
+
+    </ScrollView>
 
     
 
@@ -55,6 +65,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
+    shadowColor: "#000",
+    shadowOpacity: 1,
+    shadowRadius: 8,
+    elevation: 4,
 
    }, 
 });
