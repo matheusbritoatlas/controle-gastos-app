@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View, } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, View } from 'react-native';
 
 type CardAcaoProps = TouchableOpacityProps & {
     simbolo: string
@@ -7,17 +7,18 @@ type CardAcaoProps = TouchableOpacityProps & {
 }
 
 
-function CardAcao({simbolo, texto, tipo, ...rest }: CardAcaoProps) { // CardAcao
+function CardAcao({simbolo, texto, tipo, ...rest }: CardAcaoProps) { 
+    
 
 
     return (    
 
-        <TouchableOpacity  // botão de ação rápida clivavel
+        <TouchableOpacity 
 
-            style={styles.container} 
-            activeOpacity={0.1}
-             {...rest}>
-
+                style={[styles.container, tipo === "Entrada" ? styles.bordaEntrada : styles.bordaSaida]}
+                activeOpacity={0.1}
+                {...rest}
+>
             <View style={tipo === "Entrada" ? styles.circuloEntrada : styles.circuloSaida}>  
 
                 <Text style={styles.simbolo}>
@@ -26,7 +27,11 @@ function CardAcao({simbolo, texto, tipo, ...rest }: CardAcaoProps) { // CardAcao
 
             </View>
 
-            <Text>{texto}</Text>
+            <Text style={styles.texto}
+            
+            >{texto}
+            
+            </Text>
             
         </TouchableOpacity>
 
@@ -36,9 +41,11 @@ function CardAcao({simbolo, texto, tipo, ...rest }: CardAcaoProps) { // CardAcao
 const styles = StyleSheet.create({
     container: {
 
-        width: 160,
-        height: 80,
-        borderWidth: 1,
+        width: 165,
+        height: 70,
+        borderWidth: 0.5,
+        
+    
 
         alignItems: "center",
         justifyContent: "center",
@@ -71,6 +78,21 @@ const styles = StyleSheet.create({
             alignItems: "center",
             justifyContent: "center",
         },
+
+        texto: {
+
+            marginTop: 8, 
+        },
+
+        bordaEntrada: {
+            
+            borderColor: "#37ce37"
+        },
+
+        bordaSaida: {
+            
+            borderColor: "#e91919"
+        }
 
 
 });  

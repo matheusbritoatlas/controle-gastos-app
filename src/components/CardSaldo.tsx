@@ -72,6 +72,10 @@ function CardSaldo() {
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 40,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
     
    
   },
@@ -83,7 +87,10 @@ function CardSaldo() {
     borderRadius: 10,
     padding: 10,
     width: "40%",
-    
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   
   },
 
@@ -94,6 +101,10 @@ function CardSaldo() {
     borderRadius: 10,
     padding: 10,
     width: "40%",
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
 
   tituloSaldo: {

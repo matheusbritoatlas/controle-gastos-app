@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import CardAcao from "./CardAcao";
 
 function AcoesRapidas () {   
@@ -7,12 +7,12 @@ function AcoesRapidas () {
 
     <View> {/* Ações Rápidas */}
 
-        <Text> Ações Rápidas </Text>
+        <Text style= {styles.titulo}
+        > Ações Rápidas 
+        </Text>
 
-        <View  style={{ flexDirection: "row", justifyContent: "space-between" }}>  {/* Botões de ações rápidas */}
-
+       <View style={styles.cards}>  {/* Botões de ações rápidas */}
                
-
             <CardAcao  
             simbolo="+" 
             texto="Adicionar Entrada"
@@ -31,5 +31,27 @@ function AcoesRapidas () {
 
     );
 }
+const styles = StyleSheet.create({  
+
+    titulo: {
+
+        fontSize: 20,
+        fontWeight: "bold",
+         marginTop: -29,
+
+    },
+    cards: {
+
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginTop: 22,
+    }
+    
+
+});
+
+
+
+ 
 
 export default AcoesRapidas;
