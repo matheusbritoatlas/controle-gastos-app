@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
 import CardAcao from "./CardAcao";
 
@@ -17,7 +18,7 @@ function AcoesRapidas () {
             simbolo="+" 
             texto="Adicionar Entrada"
             tipo = "Entrada"
-            onPress={() => console.log("Adicionar Entrada")} />
+            onPress={() => router.push("/entrada")} />
 
             <CardAcao 
             simbolo="-" 
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
 
         fontSize: 20,
         fontWeight: "bold",
-         marginTop: -29,
+        
 
     },
     cards: {
