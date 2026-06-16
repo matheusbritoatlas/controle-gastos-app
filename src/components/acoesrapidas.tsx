@@ -1,5 +1,6 @@
 import { router } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
+import { Button } from "./Button";
 import CardAcao from "./CardAcao";
 
 function AcoesRapidas () {   
@@ -26,8 +27,15 @@ function AcoesRapidas () {
             tipo = "Saída"
             onPress={() => router.push("/saida")} />
 
-
         </View>
+
+        <View style={styles.botaoExtrato}>
+            <Button
+                label="Ver Extrato"
+                onPress={() => router.push("/extrato")}
+            />
+        </View>
+
 
     </View>
 
@@ -47,8 +55,12 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         marginTop: 22,
-    }
-    
+    },
+    botaoExtrato: {
+
+        marginTop: 20,
+        },
+            
 
 });
 
