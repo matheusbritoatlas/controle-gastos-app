@@ -1,12 +1,8 @@
-import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
-
-import { useState } from "react";
-
-import { Input } from "@/components/input";
-
 import { Button } from "@/components/Button";
-
+import { Input } from "@/components/input";
 import { Link, router } from "expo-router";
+import { useState } from "react";
+import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Index(){
     const [email, setEmail] = useState("")
