@@ -1,9 +1,9 @@
 import { StyleSheet, TextInput, TextInputProps } from "react-native"
 
-export function Input ({...rest }: TextInputProps) {
+export function Input ({ style, ...rest }: TextInputProps) {
     return (
     <TextInput 
-    style ={styles.Input} 
+    style={[styles.Input, style]}
     placeholderTextColor="#000"
     {...rest} 
     />
@@ -12,15 +12,16 @@ export function Input ({...rest }: TextInputProps) {
 }
 
 const styles = StyleSheet.create({
+
     Input: {
-        height: 48,
-        width: "100%" ,
-        borderWidth: 1,
-        borderColor: "#DCDCDC",
-        borderRadius: 8,
-        fontSize: 16,
-        paddingLeft: 12,
-        color : "#000000",
- 
-    },
+    height: 48,
+    width: "100%",
+    borderWidth: 1.2,
+    borderColor: "#D1D5DB",
+    borderRadius: 12,
+    fontSize: 16,
+    paddingLeft: 16,
+    color: "#000000",
+},
+    
 })

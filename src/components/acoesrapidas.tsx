@@ -24,7 +24,8 @@ function AcoesRapidas () {
             simbolo="-" 
             texto="Adicionar Saída"
             tipo = "Saída"
-            onPress={() => console.log("Adicionar Saída")} />
+            onPress={() => router.push("/saida")} />
+
 
         </View>
 
