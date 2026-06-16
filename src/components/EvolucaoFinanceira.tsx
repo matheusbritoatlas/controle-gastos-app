@@ -4,7 +4,6 @@ import { LineChart } from "react-native-chart-kit";
     type EvolucaoFinanceiraProps = { 
     labels: string[]
     dados: number[]
-
     } 
 
    function EvolucaoFinanceira({

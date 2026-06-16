@@ -1,12 +1,30 @@
-import { Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
-
-import { Input } from "@/components/input";
-
 import { Button } from "@/components/Button";
-
+import { Input } from "@/components/input";
 import { Link } from "expo-router";
+import { useState } from "react";
+import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 
-export default function singup(){
+export default function Singup(){
+    const [nome, setNome] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [passwordConfirmation, setPasswordConfirmation] = useState("")
+
+    function handleSignIn(){
+            if(!email.trim() || 
+               !password.trim() || 
+               !nome.trim() ||
+               !passwordConfirmation.trim()){
+             return Alert.alert("Cadastrar", "Preencha todos os campos para continuar!" )
+            }
+
+            if(password !== passwordConfirmation){
+             return Alert.alert("Cadastrar", "As senhas nos camposdevem ser iguais!")
+            }
+    
+            Alert.alert("Bem-vindo", `Login realizado com ${email}`)
+    }
+
     return (
         <KeyboardAvoidingView 
         style={{flex: 1}} behavior={Platform.select({ios: "padding", android: "height"})}>
@@ -26,11 +44,28 @@ export default function singup(){
             <Text style= {styles.title}>Cadastrar</Text>
             <Text style= {styles.subtitle}>Crie uma conta para acessar o aplicativo.</Text>
             <View style={ styles.form}>
-            <Input placeholder= "Nome" />
-            <Input placeholder= "E-mail" keyboardType="email-address" />
-             <Input placeholder="Senha" secureTextEntry />
-             <Input placeholder=" Confirme a Senha" secureTextEntry />
-             <Button label="Cadastrar"/>
+            <Input 
+                placeholder= "Nome" 
+                onChangeText={setNome}/>
+
+            <Input 
+                placeholder= "E-mail" 
+                keyboardType="email-address" 
+                onChangeText={setEmail}/>
+
+             <Input 
+                placeholder="Senha" 
+                secureTextEntry 
+                onChangeText={setPassword}/>
+
+             <Input 
+                placeholder=" Confirme a Senha" 
+                secureTextEntry onChangeText={setPasswordConfirmation}/>
+
+             <Button 
+                label="Cadastrar"
+                onPress={handleSignIn}/>
+
             </View>
 
 
