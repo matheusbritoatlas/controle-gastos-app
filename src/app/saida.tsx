@@ -29,10 +29,8 @@ function saida () {
 
     return (
 
-        <SafeAreaView
-        style={{ flex: 1 }}
-        edges={["top"]}
-    >
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#f58688",}}
+  edges={["top"]}>
 
         <KeyboardAvoidingView
             style={{ flex: 1 }}
@@ -43,9 +41,10 @@ function saida () {
         >
 
             <ScrollView
-               
-                keyboardShouldPersistTaps="handled"
-            >
+             style={{
+            backgroundColor: "#FFFFFF"
+             }}
+            keyboardShouldPersistTaps="handled" >
 
             <HeaderFormulario
             titulo="Adicionar Gasto"

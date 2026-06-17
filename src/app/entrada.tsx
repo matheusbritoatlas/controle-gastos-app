@@ -25,10 +25,8 @@ function entrada () {
 
     return (
 
-    <SafeAreaView
-    style={{ flex: 1 }}
-    edges={["top"]}
-    >
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#22C55E",}}
+  edges={["top"]}>
 
     <KeyboardAvoidingView
         style={{ flex: 1 }}
@@ -39,8 +37,8 @@ function entrada () {
     >
 
         <ScrollView
-    style={{ backgroundColor: "#FFFFFF" }}
-    keyboardShouldPersistTaps="handled"
+        style={{ backgroundColor: "#FFFFFF" }}
+        keyboardShouldPersistTaps="handled"
         >
            
             <HeaderFormulario

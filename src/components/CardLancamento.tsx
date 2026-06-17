@@ -12,13 +12,13 @@ import { StyleSheet, Text, View } from "react-native";
        
 }
 
-        function Cardlancamento ({titulo,categoria,data,valor,tipo}: CardLancamentoProps) {
+        function CardLancamento ({titulo,categoria,data,valor,tipo}: CardLancamentoProps) {
 
     return(
 
     <View style={styles.container}>
 
-        <View>
+        <View style={styles.iconeContainer}>
             <Text>🛒</Text>
         </View>
 
@@ -27,7 +27,16 @@ import { StyleSheet, Text, View } from "react-native";
             <Text>{categoria} • {data}</Text>
         </View>
 
-        <Text>{valor}</Text>
+        <Text
+            style={[
+            styles.valor,
+            tipo === "Entrada"
+            ? styles.valorEntrada
+            : styles.valorSaida
+            ]}
+            >
+            {valor}
+        </Text>
 
     </View>
 
@@ -36,12 +45,46 @@ import { StyleSheet, Text, View } from "react-native";
     const styles = StyleSheet.create({
 
         container: {
-         flexDirection: "row",
+            flexDirection: "row",
+            alignItems: "center",
+            padding: 16,
+            borderWidth: 1,
+            borderColor: "#D1D5DB",
+            borderRadius: 16,
+            marginBottom: 12,
+            marginTop: 12,
+            paddingHorizontal: 20,
+             paddingBottom: 40,
+            
         
         },
 
         informacoes: {
-        flex: 1,
+            flex: 1,
+            },
+        
+        iconeContainer: {
+
+        width: 40,
+        height: 40,
+        backgroundColor: "#d1da57",
+        borderRadius: 20,
+        marginRight: 12,
+        alignItems: "center",
+        justifyContent: "center",
+       
+        },
+         valor: {
+
+        fontWeight: "bold",
+        },
+        valorEntrada:{
+
+        color: "#22C55E",
+        },
+
+        valorSaida: {
+        color: "#EF4444",
         },
 
 
@@ -50,4 +93,4 @@ import { StyleSheet, Text, View } from "react-native";
 })
 
 
-export default Cardlancamento;
+export default CardLancamento;

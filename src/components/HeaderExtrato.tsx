@@ -1,5 +1,4 @@
-import { Input } from "@/components/input";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
 function HeaderExtrato() {
   return (
@@ -14,16 +13,15 @@ function HeaderExtrato() {
 
       <View style={styles.busca}>
 
-     <View style={styles.inputContainer}>
-
-    <Input
+    <View style={styles.inputContainer}>
+      <TextInput
     placeholder="Pesquisar..."
-    placeholderTextColor="#9CA3AF"
-    />
-    
-    </View>
+    style={styles.inputPesquisa}/>
+  </View>
 
-    <Text>Filtro</Text>
+   <Text style={{ marginLeft: 12 }}>
+         Filtro
+    </Text>
 
     </View>
 
@@ -34,26 +32,45 @@ function HeaderExtrato() {
 const styles = StyleSheet.create({
 
   container: {
-    backgroundColor: "#F3E46A",
-  },
+   
+  backgroundColor: "#F3F4A6",
+  borderBottomLeftRadius: 20,
+  borderBottomRightRadius: 20,
+  paddingBottom: 20,
+},
 
   topo: {
-    paddingTop: 20,
+    paddingTop: 70,
+    paddingHorizontal: 20,
+    paddingBottom: 16,
+    alignItems: "center",
   },
 
   titulo: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: "bold",
   },
 
   busca: {
-  flexDirection: "row",
 
-  },
+  flexDirection: "row",
+  paddingHorizontal: 20,
+  paddingBottom: 28,
+  marginTop: 8,
+  alignItems: "center",
+  },  
   
   inputContainer: {
   flex: 1,
+  
 },
+inputPesquisa: {
+  height: 50,
+  backgroundColor: "#FFFFFF",
+  borderRadius: 20,
+  paddingHorizontal: 16,
+}
+
 
 });
 export default HeaderExtrato;
