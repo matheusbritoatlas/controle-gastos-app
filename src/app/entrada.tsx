@@ -18,16 +18,64 @@ function entrada() {
   const [data, setData] = useState("")
   const [detalhes, setDetalhes] = useState("")
   const { adicionarMovimentacao } = useContext(MovimentacoesContext)
+  const [erro, setErro] = useState("")
+  const valorNumero = Number(valor.replace(",", "."))
+  const partes = data.split("/")
+  const [dia, mes, ano] = partes.map(Number)
+
+  function formatarData(texto: string) {
+        const numeros = texto.replace(/\D/g, "")
+
+    
+    if (numeros.length <= 2) {
+        setData(numeros)
+
+    } else if (numeros.length <= 4) {
+        setData(`${numeros.slice(0, 2)}/${numeros.slice(2)}`)
+
+    } else {
+        setData(
+            `${numeros.slice(0, 2)}/${numeros.slice(2, 4)}/${numeros.slice(4, 8)}`
+        )
+    }
+}
+   
 
 
 
   function handleSalvar() {
 
+    if (partes.length !== 3) {
+             setErro("Data inválida")
+            return
+            }
+               
+    if (
+         dia < 1 || dia > 31 ||
+          mes < 1 || mes > 12 ||
+         ano < 2000 || ano > 2100
+         ) {
+         setErro("Data inválida")
+         return
+         }
+
+    if (!titulo || !valor || !data) {
+  setErro("Preencha todos os campos obrigatórios")
+  return
+    }
+     setErro("")
+     
+
+    if (isNaN(valorNumero)) {
+    setErro("Digite um valor válido")
+    return
+    }
+
     adicionarMovimentacao({
     titulo: titulo,
     categoria: "Receita",
     data: data,
-    valor: `+ R$ ${valor}`,
+    valor: `+ R$ ${valorNumero.toFixed(2).replace(".", ",")}`,
     tipo: "Entrada",
   })
 
@@ -65,7 +113,7 @@ function entrada() {
 
             <Input
              value={titulo}
-             placeholder="Ex: Supermercado"
+             placeholder="Ex: Salario"
              placeholderTextColor="#9CA3AF"
              onChangeText={setTitulo} />
              
@@ -90,7 +138,7 @@ function entrada() {
                 placeholder="dd/mm/aaaa"
                 placeholderTextColor="#9CA3AF"
                 keyboardType="numeric"
-                onChangeText={setData}/>
+                onChangeText={formatarData}/>
 
                <Text style={styles.label}>
                   Datalhes
@@ -105,6 +153,10 @@ function entrada() {
                 textAlignVertical="top"
                 style={styles.inputDetalhes}
                 />
+
+                <Text style={styles.erro}>
+                    {erro}
+                    </Text>
 
              <Button
 
@@ -146,6 +198,10 @@ const styles = StyleSheet.create({
     height: 120,
     paddingTop: 12,
 },
+    erro: {
+
+        color: "red",
+        }
 
 });
 export default entrada;

@@ -24,9 +24,13 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
         <View style={styles.informacoes}>
             
-            <Text>{titulo}</Text>
+            <Text style={styles.titulo}>
+                {titulo}
+                </Text>
 
-            <Text>{categoria} • {data}</Text>
+                <Text style={styles.detalhes}>
+                {categoria} • {data}
+                </Text>
 
             <View style={styles.acoes}>
                 <Text
@@ -66,7 +70,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
             marginBottom: 12,
             marginTop: 12,
             paddingHorizontal: 20,
-             paddingBottom: 40,
+            
             
         
         },
@@ -104,6 +108,20 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
         justifyContent: "space-between",
          marginTop: 8,
          },
+
+         titulo: {
+
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#111827",
+        },
+
+         detalhes: {
+
+        fontSize: 13,
+        color: "#6B7280",
+        marginTop: 2,
+        },
 
 
 
