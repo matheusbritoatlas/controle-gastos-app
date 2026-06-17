@@ -1,9 +1,7 @@
-import express from 'express'
-import { dbAsync } from '../database/database.js' // Ajustado o caminho relativo correto
+const express = require('express');
+const { dbAsync } = require('../database/database.js'); // Ajustado para require
 
-const app = express()
-
-app.use(express.json())
+const router = express.Router();
 
 function formatarData(dataInput) {
     
@@ -16,7 +14,7 @@ function formatarData(dataInput) {
     return `${ano}-${mes}-${dia}`;
 }
 
-app.get('/consultar_movimentacoes', async (req, res) => {
+router.get('/consultar_movimentacoes', async (req, res) => {
     const { tipo_movimentacao, data_inicio, data_final } = req.body;
 
     if (!data_inicio || !data_final) {
@@ -42,7 +40,7 @@ app.get('/consultar_movimentacoes', async (req, res) => {
     }
 });
 
-app.get('/consultar_saldo', async (req, res) => {
+router.get('/consultar_saldo', async (req, res) => {
     try {
         const resultado = await dbAsync.get('SELECT SUM(valor) AS total FROM movimentacoes', []);
         return res.json(resultado);
@@ -51,7 +49,7 @@ app.get('/consultar_saldo', async (req, res) => {
     }
 });
 
-app.get('/consultar_total_saidas_entradas', async (req, res) => {
+router.get('/consultar_total_saidas_entradas', async (req, res) => {
     const { tipo_movimentacao, data_inicio, data_final } = req.body;
 
     if (!data_inicio || !data_final) {
@@ -79,7 +77,7 @@ app.get('/consultar_total_saidas_entradas', async (req, res) => {
 });
 
 
-app.get('/consultar_registros_categorias', async (req, res) => {
+router.get('/consultar_registros_categorias', async (req, res) => {
     const { categoria, data_inicio, data_final } = req.body;
 
     if (!data_inicio || !data_final || !categoria) {
@@ -100,7 +98,7 @@ app.get('/consultar_registros_categorias', async (req, res) => {
     }
 });
 
-app.get('/consultar_total_por_categoria', async (req, res) => {
+router.get('/consultar_total_por_categoria', async (req, res) => {
     const { categoria, data_inicio, data_final } = req.body;
 
     if (!data_inicio || !data_final || !categoria) {
@@ -123,7 +121,7 @@ app.get('/consultar_total_por_categoria', async (req, res) => {
     }
 });
 
-app.post('/registrar_movimentacao', async (req, res) => {
+router.post('/registrar_movimentacao', async (req, res) => {
 
     const { titulo, valor, data, tipo_movimentacao, categoria } = req.body; 
     
@@ -156,9 +154,38 @@ app.post('/registrar_movimentacao', async (req, res) => {
             categoria
         });
     
-    } catch (error) {
-        return res.status(500).json({ error: error.message });
+    } catch (erro) {
+        return res.status(500).json({ error: erro.message });
     }
 });
 
-export default app;
+// Mudamos de '/deletar_movimentacao' para '/movimentacoes/:id' (padrão REST)
+router.delete('/movimentacoes/:id', async (req, res) => {
+    // Pegamos o ID dos parâmetros da URL
+    const { id } = req.params;
+
+    // 1. Validação básica de entrada
+    if (!id) {
+        return res.status(400).json({ erro: "O ID da movimentação é obrigatório." });
+    }
+
+    const query = "DELETE FROM movimentacoes WHERE id = ?";
+
+    try {
+        const resultado = await dbAsync.run(query, [id]);
+
+        if (resultado.changes === 0) {
+            return res.status(404).json({ erro: "Movimentação não encontrada." });
+        }
+
+        return res.status(200).json({ mensagem: "Movimentação deletada com sucesso." });
+
+    } catch (error) {
+        return res.status(500).json({ 
+            erro: "Erro ao deletar a movimentação no banco de dados.", 
+            detalhe: error.message 
+        });
+    }
+});
+
+module.exports = router;
