@@ -1,6 +1,10 @@
+import { MovimentacoesProvider } from "@/context/MovimentacoesContext"
 import { Stack } from "expo-router"
 
-
-export default function Layout(){
-    return <Stack screenOptions={{headerShown: false }}/> 
+export default function Layout() {
+  return (
+    <MovimentacoesProvider>
+      <Stack screenOptions={{ headerShown: false }} />
+    </MovimentacoesProvider>
+  )
 }

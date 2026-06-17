@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 
 
@@ -23,11 +23,13 @@ import { StyleSheet, Text, View } from "react-native";
         </View>
 
         <View style={styles.informacoes}>
+            
             <Text>{titulo}</Text>
-            <Text>{categoria} • {data}</Text>
-        </View>
 
-        <Text
+            <Text>{categoria} • {data}</Text>
+
+            <View style={styles.acoes}>
+                <Text
             style={[
             styles.valor,
             tipo === "Entrada"
@@ -37,6 +39,16 @@ import { StyleSheet, Text, View } from "react-native";
             >
             {valor}
         </Text>
+         
+          <TouchableOpacity
+                onPress={() => console.log("Excluir movimentação")}>
+                <Text>🗑</Text>
+            </TouchableOpacity>
+
+            </View>
+        </View>
+
+
 
     </View>
 
@@ -86,6 +98,12 @@ import { StyleSheet, Text, View } from "react-native";
         valorSaida: {
         color: "#EF4444",
         },
+
+        acoes: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+         marginTop: 8,
+         },
 
 
 

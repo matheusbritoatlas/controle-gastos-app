@@ -1,5 +1,7 @@
 import CardLancamento from "@/components/CardLancamento";
 import HeaderExtrato from "@/components/HeaderExtrato";
+import { MovimentacoesContext } from "@/context/MovimentacoesContext";
+import { useContext } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -9,40 +11,10 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 
 function Extrato() {
+  
 
-    type Lancamento = {
-    titulo: string
-    categoria: string
-    data: string
-    valor: string
-    tipo: "Entrada" | "Saída"
-  }
-
- const lancamentos: Lancamento[] = [
-  {
-    titulo: "Supermercado",
-    categoria: "Alimentação",
-    data: "10/09/2025",
-    valor: "- R$ 250,00",
-    tipo: "Saída",
-  },
-
-  {
-    titulo: "Salário",
-    categoria: "Receita",
-    data: "05/09/2025",
-    valor: "+ R$ 5000,00",
-    tipo: "Entrada",
-  },
-
-  {
-    titulo: "Uber",
-    categoria: "Transporte",
-    data: "08/09/2025",
-    valor: "- R$ 35,00",
-    tipo: "Saída",
-  },
-];
+    
+  const { movimentacoes } = useContext(MovimentacoesContext)
   
 
   return (
@@ -60,7 +32,7 @@ function Extrato() {
 
     <View style={styles.container}>
 
-      {lancamentos.map((lancamento, index) => (
+      {movimentacoes.map((lancamento, index) => (
 
       <CardLancamento
 

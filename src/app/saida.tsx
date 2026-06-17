@@ -2,7 +2,8 @@ import { Button } from "@/components/Button";
 import CategoriaSaida from "@/components/CategoriaSaida";
 import HeaderFormulario from "@/components/HeaderFormulario";
 import { Input } from "@/components/input";
-import { useState } from "react";
+import { MovimentacoesContext } from "@/context/MovimentacoesContext";
+import { useContext, useState } from "react";
 import {
     KeyboardAvoidingView,
     Platform,
@@ -14,12 +15,17 @@ import { SafeAreaView } from "react-native-safe-area-context";
 function saida () {
 
     function handleSalvarSaida() {
-    console.log("Título:", titulo)
-    console.log("Valor:", valor)
-    console.log("Data:", data)
-    console.log("Detalhes:", detalhes)
-    console.log("Categoria:", categoria)
-    }
+
+  adicionarMovimentacao({
+    titulo: titulo,
+    categoria: categoria,
+    data: data,
+    valor: `- R$ ${valor}`,
+    tipo: "Saída",
+  })
+
+  console.log("Gasto adicionado")
+}
 
     const [titulo, setTitulo] = useState("")
     const [valor, setValor] = useState("")
@@ -27,9 +33,12 @@ function saida () {
     const [detalhes, setDetalhes] = useState("")
     const [categoria, setCategoria] = useState("")
 
+    const { adicionarMovimentacao } =
+    useContext(MovimentacoesContext)
+
     return (
 
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#f58688",}}
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#EF4444",}}
   edges={["top"]}>
 
         <KeyboardAvoidingView

@@ -1,7 +1,8 @@
 import { Button } from "@/components/Button";
 import HeaderFormulario from "@/components/HeaderFormulario";
 import { Input } from "@/components/input";
-import { useState } from "react";
+import { MovimentacoesContext } from "@/context/MovimentacoesContext";
+import { useContext, useState } from "react";
 import {
     KeyboardAvoidingView,
     Platform,
@@ -9,19 +10,29 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-function entrada () {
+function entrada() {
+    
 
-    function handleSalvar() {
-    console.log("Título:", titulo)
-    console.log("Valor:", valor)
-    console.log("Data:", data)
-    console.log("Detalhes:", detalhes)
-    }
+  const [titulo, setTitulo] = useState("")
+  const [valor, setValor] = useState("")
+  const [data, setData] = useState("")
+  const [detalhes, setDetalhes] = useState("")
+  const { adicionarMovimentacao } = useContext(MovimentacoesContext)
 
-    const [titulo, setTitulo] = useState("")
-    const [valor, setValor] = useState("")
-    const [data, setData] = useState("")
-    const [detalhes, setDetalhes] = useState("")
+
+
+  function handleSalvar() {
+
+    adicionarMovimentacao({
+    titulo: titulo,
+    categoria: "Receita",
+    data: data,
+    valor: `+ R$ ${valor}`,
+    tipo: "Entrada",
+  })
+
+    console.log("Movimentação adicionada")
+  }
 
     return (
 
