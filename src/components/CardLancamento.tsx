@@ -104,6 +104,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
         },
 
         acoes: {
+            
         flexDirection: "row",
         justifyContent: "space-between",
          marginTop: 8,

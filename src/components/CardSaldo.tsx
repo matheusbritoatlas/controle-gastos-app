@@ -1,8 +1,26 @@
+import { MovimentacoesContext } from "@/context/MovimentacoesContext";
+import { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 
-
 function CardSaldo() {
+
+  const { movimentacoes } = useContext(MovimentacoesContext)
+
+  const totalEntradas = movimentacoes
+  .filter((m: any) => m.tipo === "Entrada")
+  .reduce((soma: number, m: any) => soma + m.valor, 0)
+
+  const totalSaidas = movimentacoes
+  .filter((m: any) => m.tipo === "Saída")
+  .reduce((soma: number, m: any) => soma + m.valor, 0)
+
+    console.log("MOVIMENTACOES =", movimentacoes)
+    console.log("ENTRADAS =", totalEntradas)
+    console.log("TIPO =", typeof totalEntradas)
+    const saldo = totalEntradas - totalSaidas
+
+
 
   return (
 
@@ -16,7 +34,7 @@ function CardSaldo() {
 
       <Text style={styles.valorSaldo}
 
-      > R$ 1000
+      > {String(saldo)}
 
       </Text>
  
@@ -29,11 +47,10 @@ function CardSaldo() {
         > Entradas 
         </Text>
 
-        <Text style={styles.ValorMiniCard}
-        > R$ 500
-        </Text>  
-
-      </View>
+        <Text style={styles.ValorMiniCard}>
+          {String(totalEntradas)}
+       </Text>
+       </View>
 
       <View style={styles.saida}> {/* view saídas */}  
 
@@ -42,7 +59,7 @@ function CardSaldo() {
         </Text>
         
         <Text style={styles.ValorMiniCard}
-        > R$ 200
+        >{String(totalSaidas)}
         </Text>    
 
       </View>

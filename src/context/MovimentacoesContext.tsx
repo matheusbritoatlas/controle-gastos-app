@@ -11,7 +11,7 @@ const movimentacoesIniciais: Movimentacao[] = [
     titulo: "Supermercado",
     categoria: "Alimentação",
     data: "10/09/2025",
-    valor: "- R$ 250,00",
+    valor: 250,
     tipo: "Saída",
   },
 
@@ -19,7 +19,7 @@ const movimentacoesIniciais: Movimentacao[] = [
     titulo: "Salário",
     categoria: "Receita",
     data: "05/09/2025",
-    valor: "+ R$ 5000,00",
+    valor: 5000,
     tipo: "Entrada",
   },
 
@@ -27,7 +27,7 @@ const movimentacoesIniciais: Movimentacao[] = [
     titulo: "Uber",
     categoria: "Transporte",
     data: "08/09/2025",
-    valor: "- R$ 35,00",
+    valor: 35,
     tipo: "Saída",
   },
 ];
@@ -39,9 +39,11 @@ export function MovimentacoesProvider({
 const [movimentacoes, setMovimentacoes] =
   useState<Movimentacao[]>(movimentacoesIniciais);
 
-  function adicionarMovimentacao(
+ function adicionarMovimentacao(
   movimentacao: Movimentacao
 ) {
+  console.log("NOVA MOVIMENTACAO =", movimentacao)
+
   setMovimentacoes((estadoAtual) => [
     ...estadoAtual,
     movimentacao,

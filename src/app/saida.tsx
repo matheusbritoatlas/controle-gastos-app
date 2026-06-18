@@ -27,6 +27,7 @@ function saida () {
     const [dia, mes, ano] = partes.map(Number)
     
 
+
     function formatarData(texto: string) {
         const numeros = texto.replace(/\D/g, "")
 
@@ -74,19 +75,21 @@ function saida () {
         setErro("Digite um valor válido")
         return
         }
+        console.log("VALOR DIGITADO =", valor)
+        console.log("VALOR NUMERO =", valorNumero)
 
-  adicionarMovimentacao({
-    titulo: titulo,
-    categoria: categoria,
-    data: data,
-    valor: `- R$ ${valorNumero.toFixed(2).replace(".", ",")}`,
-    tipo: "Saída",
-  })
+adicionarMovimentacao({
+  titulo,
+  categoria,
+  data,
+  valor: valorNumero,
+  tipo: "Saída",
+})
+
 
   console.log("Gasto adicionado")
 }
 
-  
 
     return (
 

@@ -2,7 +2,7 @@ export type Movimentacao = {
   titulo: string
   categoria: string
   data: string
-  valor: string
+  valor: number
   tipo: "Entrada" | "Saída"
 }
 
@@ -11,7 +11,7 @@ export const movimentacoes: Movimentacao[] = [
     titulo: "Supermercado",
     categoria: "Alimentação",
     data: "10/09/2025",
-    valor: "- R$ 250,00",
+    valor: 250,
     tipo: "Saída",
   },
 
@@ -19,7 +19,7 @@ export const movimentacoes: Movimentacao[] = [
     titulo: "Salário",
     categoria: "Receita",
     data: "05/09/2025",
-    valor: "+ R$ 5000,00",
+    valor:  5000,
     tipo: "Entrada",
   },
 
@@ -27,7 +27,7 @@ export const movimentacoes: Movimentacao[] = [
     titulo: "Uber",
     categoria: "Transporte",
     data: "08/09/2025",
-    valor: "- R$ 35,00",
+    valor:  35,
     tipo: "Saída",
   },
 ]

@@ -75,7 +75,7 @@ function entrada() {
     titulo: titulo,
     categoria: "Receita",
     data: data,
-    valor: `+ R$ ${valorNumero.toFixed(2).replace(".", ",")}`,
+    valor : valorNumero,
     tipo: "Entrada",
   })
 
