@@ -14,7 +14,8 @@ function Extrato() {
   
 
     
-  const { movimentacoes } = useContext(MovimentacoesContext)
+  const { movimentacoes, removerMovimentacao } =
+  useContext(MovimentacoesContext)
   
 
   return (
@@ -35,14 +36,13 @@ function Extrato() {
       {movimentacoes.map((lancamento, index) => (
 
       <CardLancamento
-
-        key={index}
-
-        titulo={lancamento.titulo}
-        categoria={lancamento.categoria}
-        data={lancamento.data}
-        valor={lancamento.valor}
-        tipo={lancamento.tipo}
+      key={index}
+      titulo={lancamento.titulo}
+      categoria={lancamento.categoria}
+      data={lancamento.data}
+      valor={lancamento.valor}
+      tipo={lancamento.tipo}
+      onExcluir={() => removerMovimentacao(index)}
       />
 
 ))}

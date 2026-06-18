@@ -15,10 +15,12 @@ function CardSaldo() {
   .filter((m: any) => m.tipo === "Saída")
   .reduce((soma: number, m: any) => soma + m.valor, 0)
 
-    console.log("MOVIMENTACOES =", movimentacoes)
-    console.log("ENTRADAS =", totalEntradas)
-    console.log("TIPO =", typeof totalEntradas)
-    const saldo = totalEntradas - totalSaidas
+  console.log("MOVIMENTACOES =", movimentacoes)
+  console.log("ENTRADAS =", totalEntradas)
+  console.log("TIPO =", typeof totalEntradas)
+  console.log("SAIDAS =", totalSaidas)
+  console.log("TIPO SAIDAS =", typeof totalSaidas)
+  const saldo = totalEntradas - totalSaidas
 
 
 
@@ -26,15 +28,13 @@ function CardSaldo() {
 
 <View style={styles.container}>{/* CardSaldo */}
 
-      <Text style={styles.tituloSaldo}
+      <Text style={styles.tituloSaldo}>
+        Seu Saldo
+         </Text>
       
-      > Seu Saldo 
-      
-      </Text>
-
       <Text style={styles.valorSaldo}
 
-      > {String(saldo)}
+      > R$ {saldo.toFixed(2).replace(".", ",")}
 
       </Text>
  
@@ -48,8 +48,9 @@ function CardSaldo() {
         </Text>
 
         <Text style={styles.ValorMiniCard}>
-          {String(totalEntradas)}
-       </Text>
+             R$ {totalEntradas.toFixed(2).replace(".", ",")}
+        </Text>
+        
        </View>
 
       <View style={styles.saida}> {/* view saídas */}  
@@ -59,7 +60,7 @@ function CardSaldo() {
         </Text>
         
         <Text style={styles.ValorMiniCard}
-        >{String(totalSaidas)}
+        > R$ {totalSaidas.toFixed(2).replace(".", ",")}
         </Text>    
 
       </View>

@@ -1,25 +1,26 @@
 import { StyleSheet, Text, View } from "react-native";
 
 
-function HeaderDashBoard() {        
-    return (
+function HeaderDashBoard() {
+
+   return (
 
     <View style={styles.header}>
 
 
-        <View> {/* Header do Dashboard */}   
+        <View>  
         
         <Text style={styles.Saudação}
         > Olá,
         </Text>
 
-         <Text style={styles.NomeUsuario}
-         > Titã!
-         </Text> 
+        <Text style={styles.NomeUsuario}>
+  Titã!
+</Text>
 
         </View>
 
-        <View style={styles.circulo}> {/* icone perfil */}
+        <View style={styles.circulo}> 
 
         <Text style={styles.NomeUsuario}> TT </Text>
 

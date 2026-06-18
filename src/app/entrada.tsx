@@ -2,8 +2,10 @@ import { Button } from "@/components/Button";
 import HeaderFormulario from "@/components/HeaderFormulario";
 import { Input } from "@/components/input";
 import { MovimentacoesContext } from "@/context/MovimentacoesContext";
+import { router } from "expo-router";
 import { useContext, useState } from "react";
 import {
+    Alert,
     KeyboardAvoidingView,
     Platform,
     ScrollView, StyleSheet, Text, View
@@ -60,8 +62,8 @@ function entrada() {
          }
 
     if (!titulo || !valor || !data) {
-  setErro("Preencha todos os campos obrigatórios")
-  return
+    setErro("Preencha todos os campos obrigatórios")
+    return
     }
      setErro("")
      
@@ -78,8 +80,18 @@ function entrada() {
     valor : valorNumero,
     tipo: "Entrada",
   })
-
-    console.log("Movimentação adicionada")
+    Alert.alert(
+    "Sucesso",
+    "Entrada adicionada com sucesso!",
+    [
+        {
+        text: "OK",
+        onPress: () => router.push("/dashboard"),
+        },
+    ]
+    )
+    
+    router.push("/dashboard")
   }
 
     return (

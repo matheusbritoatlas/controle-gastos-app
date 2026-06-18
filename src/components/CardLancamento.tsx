@@ -2,26 +2,34 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 
 
-    type CardLancamentoProps = {
+        type CardLancamentoProps = {
         titulo: string
         categoria: string
         data: string
         valor: number
-
         tipo: "Entrada" | "Saída"
-       
-}
+        onExcluir: () => void
+        
+        }
 
-        function CardLancamento ({titulo,categoria,data,valor,tipo}: CardLancamentoProps) {
+        function CardLancamento ({titulo,categoria,data,valor,tipo, onExcluir}: CardLancamentoProps) {
 
     return(
 
     <View style={styles.container}>
 
-        <View style={styles.iconeContainer}>
-            <Text>🛒</Text>
-        </View>
-
+       <View
+            style={[
+                styles.iconeContainer,
+                tipo === "Entrada"
+                ? styles.iconeEntrada
+                : styles.iconeSaida,
+            ]}
+            >
+            <Text style={styles.iconeTexto}>
+                {tipo === "Entrada" ? "+" : "-"}
+            </Text>
+            </View>
         <View style={styles.informacoes}>
             
             <Text style={styles.titulo}>
@@ -43,8 +51,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
                 R$ {valor.toFixed(2).replace(".", ",")}
                 </Text>
                         
-          <TouchableOpacity
-                onPress={() => console.log("Excluir movimentação")}>
+          <TouchableOpacity 
+          onPress={onExcluir}>
                 <Text>🗑</Text>
             </TouchableOpacity>
 
@@ -117,6 +125,20 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
         fontSize: 13,
         color: "#6B7280",
         marginTop: 2,
+        },
+
+                iconeEntrada: {
+        backgroundColor: "#22C55E",
+        },
+
+        iconeSaida: {
+        backgroundColor: "#EF4444",
+        },
+
+        iconeTexto: {
+        color: "#FFFFFF",
+        fontSize: 20,
+        fontWeight: "bold",
         },
 
 

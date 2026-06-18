@@ -42,12 +42,17 @@ const [movimentacoes, setMovimentacoes] =
  function adicionarMovimentacao(
   movimentacao: Movimentacao
 ) {
-  console.log("NOVA MOVIMENTACAO =", movimentacao)
 
   setMovimentacoes((estadoAtual) => [
     ...estadoAtual,
     movimentacao,
   ]);
+}
+
+  function removerMovimentacao(index: number) {
+  setMovimentacoes((estadoAtual) =>
+    estadoAtual.filter((_, i) => i !== index)
+    )
 }
   
   return (
@@ -56,6 +61,8 @@ const [movimentacoes, setMovimentacoes] =
      value={{
   movimentacoes,
   adicionarMovimentacao,
+  removerMovimentacao,
+
 }}
     >
       {children}

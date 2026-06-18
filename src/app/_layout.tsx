@@ -1,5 +1,5 @@
-import { MovimentacoesProvider } from "@/context/MovimentacoesContext"
-import { Stack } from "expo-router"
+import { MovimentacoesProvider } from "@/context/MovimentacoesContext";
+import { Stack } from "expo-router";
 
 export default function Layout() {
   return (

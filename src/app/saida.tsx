@@ -3,8 +3,10 @@ import CategoriaSaida from "@/components/CategoriaSaida";
 import HeaderFormulario from "@/components/HeaderFormulario";
 import { Input } from "@/components/input";
 import { MovimentacoesContext } from "@/context/MovimentacoesContext";
+import { router } from "expo-router";
 import { useContext, useState } from "react";
 import {
+    Alert,
     KeyboardAvoidingView,
     Platform,
     ScrollView, StyleSheet, Text, View
@@ -84,11 +86,20 @@ adicionarMovimentacao({
   data,
   valor: valorNumero,
   tipo: "Saída",
-})
+    })
+    
+    Alert.alert("Sucesso","Gasto adicionado com sucesso!",
+  [
+    {
+      text: "OK",
+      onPress: () => router.push("/dashboard"),
+    },
+  ]
+    )
 
 
-  console.log("Gasto adicionado")
-}
+  router.push("/dashboard")
+    }
 
 
     return (
