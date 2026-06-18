@@ -6,7 +6,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
         titulo: string
         categoria: string
         data: string
-        valor: string
+        valor: number
 
         tipo: "Entrada" | "Saída"
        
@@ -32,18 +32,17 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
                 {categoria} • {data}
                 </Text>
 
-            <View style={styles.acoes}>
-                <Text
-            style={[
-            styles.valor,
-            tipo === "Entrada"
-            ? styles.valorEntrada
-            : styles.valorSaida
-            ]}
-            >
-            {valor}
-        </Text>
-         
+            <Text
+                style={[
+                    styles.valor,
+                    tipo === "Entrada"
+                    ? styles.valorEntrada
+                    : styles.valorSaida
+                ]}
+                >
+                R$ {valor.toFixed(2).replace(".", ",")}
+                </Text>
+                        
           <TouchableOpacity
                 onPress={() => console.log("Excluir movimentação")}>
                 <Text>🗑</Text>
@@ -51,10 +50,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
             </View>
         </View>
-
-
-
-    </View>
 
     )
 }
