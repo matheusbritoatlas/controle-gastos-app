@@ -5,7 +5,6 @@ import { StyleSheet, Text, View } from "react-native";
 function HeaderDashBoard() {
   const { nome } = useContext(UsuarioContext);
 
-  console.log("NOME =", nome);
 
   return (
     <View style={styles.header}>
