@@ -4,14 +4,14 @@ import { UsuarioContext } from "@/context/UsuarioContext";
 import { Link } from "expo-router";
 import { useContext, useState } from "react";
 import {
-    Alert,
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
+  Alert,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 
 export default function Singup() {
@@ -21,6 +21,7 @@ export default function Singup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  console.log("NOVO NOME =", nome);
 
   function handleSignIn() {
     if (
@@ -36,18 +37,21 @@ export default function Singup() {
     }
 
     if (password !== passwordConfirmation) {
-      return Alert.alert(
-        "Cadastrar",
-        "As senhas nos campos devem ser iguais!"
-      );
-    }
+  return Alert.alert(
+    "Cadastrar",
+    "As senhas nos campos devem ser iguais!"
+  );
+}
 
-    setNomeUsuario(nome);
+setNomeUsuario(nome);
 
-    Alert.alert(
-      "Bem-vindo",
-      `Login realizado com ${email}`
-    );
+console.log("CLICOU NO CADASTRAR");
+console.log("NOME DIGITADO =", nome);
+
+Alert.alert(
+  "Bem-vindo",
+  `Login realizado com ${email}`
+);
   } 
 
   return (

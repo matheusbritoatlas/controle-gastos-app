@@ -1,9 +1,15 @@
+import { UsuarioContext } from "@/context/UsuarioContext";
+import { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 
 function HeaderDashBoard() {
 
-   return (
+  const { nome } = useContext(UsuarioContext);
+
+  console.log("NOME =", nome);
+
+  return (
 
     <View style={styles.header}>
 
@@ -15,8 +21,8 @@ function HeaderDashBoard() {
         </Text>
 
         <Text style={styles.NomeUsuario}>
-  Titã!
-</Text>
+          {nome}!
+        </Text>
 
         </View>
 

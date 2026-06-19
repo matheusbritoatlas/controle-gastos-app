@@ -1,10 +1,13 @@
 import { MovimentacoesProvider } from "@/context/MovimentacoesContext";
+import { UsuarioProvider } from "@/context/UsuarioContext";
 import { Stack } from "expo-router";
 
 export default function Layout() {
   return (
-    <MovimentacoesProvider>
-      <Stack screenOptions={{ headerShown: false }} />
-    </MovimentacoesProvider>
+    <UsuarioProvider>
+      <MovimentacoesProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+      </MovimentacoesProvider>
+    </UsuarioProvider>
   )
 }

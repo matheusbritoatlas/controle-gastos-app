@@ -49,7 +49,6 @@ function Dashboard() {
 
     </ScrollView>
 
-    
 
     </SafeAreaView>
 
