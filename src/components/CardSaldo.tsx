@@ -15,18 +15,13 @@ function CardSaldo() {
   .filter((m: any) => m.tipo === "Saída")
   .reduce((soma: number, m: any) => soma + m.valor, 0)
 
-  console.log("MOVIMENTACOES =", movimentacoes)
-  console.log("ENTRADAS =", totalEntradas)
-  console.log("TIPO =", typeof totalEntradas)
-  console.log("SAIDAS =", totalSaidas)
-  console.log("TIPO SAIDAS =", typeof totalSaidas)
   const saldo = totalEntradas - totalSaidas
 
 
 
   return (
 
-<View style={styles.container}>{/* CardSaldo */}
+<View style={styles.container}>
 
       <Text style={styles.tituloSaldo}>
         Seu Saldo
@@ -38,9 +33,9 @@ function CardSaldo() {
 
       </Text>
  
-    <View  style={styles.detalhes}> {/* detalhes do saldo */}
+    <View  style={styles.detalhes}> 
 
-      <View style={styles.entrada}>{/* view entradas */}
+      <View style={styles.entrada}>
 
 
         <Text style={styles.tituloMiniCard}
@@ -53,7 +48,7 @@ function CardSaldo() {
         
        </View>
 
-      <View style={styles.saida}> {/* view saídas */}  
+      <View style={styles.saida}> 
 
         <Text style={styles.tituloMiniCard}
         > Saídas 

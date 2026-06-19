@@ -15,13 +15,16 @@ import {
 } from "react-native";
 
 export default function Singup() {
+
   const { setNome: setNomeUsuario } = useContext(UsuarioContext);
 
   const [nome, setNome] = useState("");
+
   const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
+  
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  console.log("NOVO NOME =", nome);
 
   function handleSignIn() {
     if (
@@ -44,9 +47,6 @@ export default function Singup() {
 }
 
 setNomeUsuario(nome);
-
-console.log("CLICOU NO CADASTRAR");
-console.log("NOME DIGITADO =", nome);
 
 Alert.alert(
   "Bem-vindo",

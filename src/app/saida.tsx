@@ -18,14 +18,23 @@ function saida () {
 
 
     const [titulo, setTitulo] = useState("")
+
     const [valor, setValor] = useState("")
+    
     const [data, setData] = useState("")
+
     const [detalhes, setDetalhes] = useState("")
+
     const [categoria, setCategoria] = useState("")
+
     const { adicionarMovimentacao } =useContext(MovimentacoesContext)
+
     const [erro, setErro] = useState("")
+
     const valorNumero = Number(valor.replace(",", "."))
+
     const partes = data.split("/")
+
     const [dia, mes, ano] = partes.map(Number)
     
 
@@ -47,8 +56,6 @@ function saida () {
     }
 }
    
-   
-
     function handleSalvarSaida() {
 
 
@@ -77,8 +84,7 @@ function saida () {
         setErro("Digite um valor válido")
         return
         }
-        console.log("VALOR DIGITADO =", valor)
-        console.log("VALOR NUMERO =", valorNumero)
+       
 
 adicionarMovimentacao({
   titulo,
@@ -97,10 +103,8 @@ adicionarMovimentacao({
   ]
     )
 
-
   router.push("/dashboard")
     }
-
 
     return (
 
@@ -194,8 +198,6 @@ adicionarMovimentacao({
 
                 </View>
 
-            
-
               <Text style={styles.label}>
                   Data
             </Text>
@@ -240,18 +242,11 @@ adicionarMovimentacao({
 }
     const styles = StyleSheet.create({
 
-    container: {
-        
+    container: {   
     paddingHorizontal: 20,
-    
     paddingBottom: 40,
-},
 
-    tituloPagina: {
-        fontSize: 24,
-        fontWeight: "bold",
-        marginTop: 20,
-    },
+            },
 
     label: {
         marginTop: 20,

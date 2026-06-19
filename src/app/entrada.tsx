@@ -1,32 +1,48 @@
-import { Button } from "@/components/Button";
-import HeaderFormulario from "@/components/HeaderFormulario";
-import { Input } from "@/components/input";
-import { MovimentacoesContext } from "@/context/MovimentacoesContext";
 import { router } from "expo-router";
 import { useContext, useState } from "react";
+
 import {
     Alert,
     KeyboardAvoidingView,
     Platform,
-    ScrollView, StyleSheet, Text, View
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
 } from "react-native";
+
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import { Button } from "@/components/Button";
+import HeaderFormulario from "@/components/HeaderFormulario";
+import { Input } from "@/components/input";
+
+import { MovimentacoesContext } from "@/context/MovimentacoesContext";
 
 function entrada() {
     
 
   const [titulo, setTitulo] = useState("")
+
   const [valor, setValor] = useState("")
+
   const [data, setData] = useState("")
+
   const [detalhes, setDetalhes] = useState("")
+
   const { adicionarMovimentacao } = useContext(MovimentacoesContext)
+
   const [erro, setErro] = useState("")
+
   const valorNumero = Number(valor.replace(",", "."))
+
   const partes = data.split("/")
-  const [dia, mes, ano] = partes.map(Number)
+
+  const [dia, mes, ano] = partes.map(Number) 
 
   function formatarData(texto: string) {
-        const numeros = texto.replace(/\D/g, "")
+
+    const numeros = texto.replace(/\D/g, "")
 
     
     if (numeros.length <= 2) {
@@ -42,9 +58,6 @@ function entrada() {
     }
 }
    
-
-
-
   function handleSalvar() {
 
     if (partes.length !== 3) {
@@ -191,12 +204,6 @@ const styles = StyleSheet.create({
    
     paddingBottom: 40,
 
-    },
-
-    tituloPagina: {
-        fontSize: 24,
-        fontWeight: "bold",
-        marginTop: 20,
     },
 
     label: {
