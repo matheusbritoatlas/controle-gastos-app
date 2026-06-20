@@ -9,4 +9,4 @@ function verificarAutenticacao(req, res, next) {
     return res.status(401).json({ erro: "Acesso negado. Faça login para continuar." });
 }
 
-module.exports = verificarAutenticacao;
+export default verificarAutenticacao;

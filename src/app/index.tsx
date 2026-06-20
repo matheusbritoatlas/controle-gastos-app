@@ -2,105 +2,143 @@ import { Button } from "@/components/Button";
 import { Input } from "@/components/input";
 import { Link, router } from "expo-router";
 import { useState } from "react";
-import { Alert, Image, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 
-export default function Index(){
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    
-    function handleSignIn(){
-        if(!email.trim() || !password.trim()){
-         return Alert.alert("Entrar", "Preencha o e-mail e a senha para continuar! " )
-        }
+import {
+    Alert,
+    Image,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
+} from "react-native";
 
-        Alert.alert("Bem-vindo", `Login realizado com ${email}`)
-        router.push("/dashboard")
+export default function Index() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  function handleSignIn() {
+    if (!email.trim() || !password.trim()) {
+      return Alert.alert(
+        "Entrar",
+        "Preencha o e-mail e a senha para continuar!"
+      );
     }
 
-    
-    return (
-        <KeyboardAvoidingView 
-        style={{flex: 1}} behavior={Platform.select({ios: "padding", android: "height"})}>
+    Alert.alert(
+      "Bem-vindo",
+      `Login realizado com ${email}`
+    );
 
-        <ScrollView 
+    router.push("/dashboard");
+  }
 
-        contentContainerStyle={{flex: 1}}
+  return (
+    <KeyboardAvoidingView
+      style={styles.keyboard}
+      behavior={Platform.select({
+        ios: "padding",
+        android: "height",
+      })}
+    >
+      <ScrollView
+        contentContainerStyle={styles.scroll}
         keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator= {false}>
-
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.container}>
-            <Image 
-            source={require ("@/assets/logoatlas.png")}
+          <Image
+            source={require("@/assets/logoatlas.png")}
             style={styles.illustration}
+          />
+
+          <Text style={styles.title}>Entrar</Text>
+
+          <Text style={styles.subtitle}>
+            Acesse sua conta com e-mail e senha
+          </Text>
+
+          <View style={styles.form}>
+            <Input
+              placeholder="E-mail"
+              keyboardType="email-address"
+              onChangeText={setEmail}
             />
-            
-            <Text style= {styles.title}>Entrar</Text>
-            <Text style= {styles.subtitle}>Acesse sua conta com e-mail e senha</Text>
-            
-            <View style={ styles.form}>
-            <Input placeholder= "E-mail"
-            keyboardType="email-address" 
-            onChangeText = {setEmail} 
+
+            <Input
+              placeholder="Senha"
+              secureTextEntry
+              onChangeText={setPassword}
             />
-            
 
-             <Input placeholder="Senha" 
-             secureTextEntry 
-             onChangeText={setPassword} 
-             />
+            <Button
+              label="Entrar"
+              onPress={handleSignIn}
+            />
+          </View>
 
-
-             <Button label="Entrar" onPress={handleSignIn}/>
-            </View>
-
-            <Text style={styles.footerText}>
-                Não Tem uma conta?{" "}
-                <Link href="/singup" style={styles.footerlink} >Cadastre-se aqui.
-                    </Link>
-                </Text>
-        </View> 
-        </ScrollView>
-        </KeyboardAvoidingView>
-    )
+          <Text style={styles.footerText}>
+            Não tem uma conta?{" "}
+            <Link
+              href="/singup"
+              style={styles.footerlink}
+            >
+              Cadastre-se aqui.
+            </Link>
+          </Text>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
 }
 
-
 const styles = StyleSheet.create({
-    container: {
-        flex: 1, 
-        backgroundColor : "#FDFDFD",
-        padding: 32, 
-   },
-   illustration: {
+  keyboard: {
+    flex: 1,
+  },
+
+  scroll: {
+    flex: 1,
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: "#FDFDFD",
+    padding: 32,
+  },
+
+  illustration: {
     width: "100%",
-    height : 300,
+    height: 300,
     resizeMode: "contain",
     marginTop: 62,
-   },
-   title: {
+  },
+
+  title: {
     fontSize: 32,
-    fontWeight: 900,
-    color : "#000000",
-   },
-   subtitle: {
+    fontWeight: "900",
+    color: "#000000",
+  },
+
+  subtitle: {
     fontSize: 16,
-    color : "#000000",
-   },
-   form: {
+    color: "#000000",
+  },
+
+  form: {
     marginTop: 24,
     gap: 12,
-   },
-   footerText: {
+  },
+
+  footerText: {
     textAlign: "center",
     marginTop: 24,
-    color: "#585860"
-   },
+    color: "#585860",
+  },
 
-   footerlink: {
-
-    color: "#032ad7",
-    fontWeight: 700,
-
-   },
-})
-
+  footerlink: {
+    color: "#032AD7",
+    fontWeight: "700",
+  },
+});

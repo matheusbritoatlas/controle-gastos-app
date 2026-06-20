@@ -21,13 +21,10 @@ import { LineChart } from "react-native-chart-kit";
                  },
             ],
         };
-
-                    
-
+            
         return (
 
-          <View style={styles.container}>{/* pricipal */}
-
+          <View style={styles.container}>
 
             <Text style={styles.textotitulo}>
 
@@ -35,7 +32,7 @@ import { LineChart } from "react-native-chart-kit";
 
             </Text>
 
-            <View style={styles.grafico}>  {/* grafico */}
+            <View style={styles.grafico}>  
 
                  <LineChart
 
@@ -48,10 +45,9 @@ import { LineChart } from "react-native-chart-kit";
                     backgroundGradientTo: "#ffffff",
                     decimalPlaces: 0,
                     color: (opacity = 1) => `rgba(76, 175, 80, ${opacity})`,
+
                     }}
                  />
-
-
 
             </View>
 
@@ -62,8 +58,7 @@ import { LineChart } from "react-native-chart-kit";
     const styles = StyleSheet.create({
 
         container: {
-
-                
+     
         width: "100%",
         borderWidth: 1,
         borderRadius: 20,
@@ -78,20 +73,15 @@ import { LineChart } from "react-native-chart-kit";
         },
 
         grafico: {
-
         height: 200,
-        
         marginTop: 16,
         
-
         },
 
         textotitulo: {
 
             fontSize: 18,
             fontWeight: "bold",
-            
-
         },
 
 

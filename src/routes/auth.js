@@ -1,10 +1,9 @@
-const express = require("express");
-const bcrypt = require("bcrypt");
-const passport = require("passport");
+import express from "express";
+import bcrypt from "bcrypt";
+import passport from "passport";
+import { dbAsync } from '../database/database.js';
 
 const router = express.Router();
-
-const db = require("../database/database");
 
 // =========================
 // CADASTRO
@@ -113,6 +112,13 @@ router.post("/login", (req, res) => {
 
             }
 
+            // ---> ADICIONE ESTA LINHA AQUI PARA SALVAR NA SESSÃO <---
+            req.session.usuario = {
+                id: usuario.id,
+                nome: usuario.nome,
+                email: usuario.email
+            };
+
             // login sucesso
             res.json({
                 mensagem: "Login realizado com sucesso",
@@ -192,9 +198,8 @@ router.get("/logout", (req, res) => {
 });
 
 
-
 // =========================
 // EXPORTA ROTAS
 // =========================
 
-module.exports = router;
+export default router;

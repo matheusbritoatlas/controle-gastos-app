@@ -1,75 +1,66 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
-
-
+import { Pressable, StyleSheet, Text } from "react-native";
 
 type CategoriaSaidaProps = {
-    nome: string
-    onPress: () => void
-    selecionado: boolean
+  nome: string;
+  onPress: () => void;
+  selecionado: boolean;
+};
 
-    }
-
-function CategoriaSaida(
-    { nome, onPress, selecionado }: CategoriaSaidaProps
-) {
-
-    return(
-
-    <TouchableOpacity
-    style={[
+function CategoriaSaida({
+  nome,
+  onPress,
+  selecionado,
+}: CategoriaSaidaProps) {
+  return (
+    <Pressable
+      style={({ pressed }) => [
         styles.botao,
-        selecionado && styles.botaoSelecionado
-    ]}
-    onPress={onPress}
->
-    <Text
-    style={[
-    styles.texto,
-    selecionado && styles.textoSelecionado
-    ]} >
-    {nome}
-    </Text>
-    </TouchableOpacity>
-
-    
-
-    );
+        selecionado && styles.botaoSelecionado,
+        {
+          opacity: pressed ? 0.7 : 1,
+        },
+      ]}
+      onPress={onPress}
+    >
+      <Text
+        style={[
+          styles.texto,
+          selecionado && styles.textoSelecionado,
+        ]}
+      >
+        {nome}
+      </Text>
+    </Pressable>
+  );
 }
 
 const styles = StyleSheet.create({
   botao: {
+    width: 120,
+    height: 100,
 
-  width: 120,
-  height: 100,
+    borderWidth: 1,
+    borderColor: "#D9D9D9",
 
-  borderWidth: 1,
-  borderColor: "#D9D9D9",
+    borderRadius: 16,
 
-  borderRadius: 16,
-
-  justifyContent: "center",
-  alignItems: "center",
-},
-
-  texto: {
-
-    fontSize: 16,
-    fontWeight: "500",
-
+    justifyContent: "center",
+    alignItems: "center",
   },
 
-    botaoSelecionado: {
+  texto: {
+    fontSize: 16,
+    fontWeight: "500",
+  },
 
+  botaoSelecionado: {
     backgroundColor: "#2563EB",
     borderColor: "#2563EB",
-},
+  },
 
-    textoSelecionado: {
-        
+  textoSelecionado: {
     color: "#FFFFFF",
-},
-
-})
-
+  },
+});
 
 export default CategoriaSaida;

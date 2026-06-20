@@ -1,5 +1,5 @@
-const express = require('express');
-const { dbAsync } = require('../database/database.js'); // Ajustado para require
+import express from "express"
+import { dbAsync } from '../database/database.js'; // Ajustado para require
 
 const router = express.Router();
 
@@ -15,18 +15,20 @@ function formatarData(dataInput) {
 }
 
 router.get('/consultar_movimentacoes', async (req, res) => {
-    const { tipo_movimentacao, data_inicio, data_final } = req.body;
+    const { tipo_movimentacao, data_inicio, data_final } = req.query;
 
     if (!data_inicio || !data_final) {
         return res.status(400).json({ error: "Parâmetros data_inicio e data_final são obrigatórios." });
     }
 
+    const userId = req.user ? req.user.id : req.session.usuario.id;
+
     try {
         const dataInicioFormatada = formatarData(data_inicio);
         const dataFinalFormatada = formatarData(data_final);
 
-        let query = "SELECT * FROM movimentacoes WHERE data BETWEEN ? AND ?";
-        const params = [dataInicioFormatada, dataFinalFormatada];
+        let query = "SELECT * FROM movimentacoes WHERE user_id = ? AND data BETWEEN ? AND ?";
+        const params = [userId, dataInicioFormatada, dataFinalFormatada];
 
         if (tipo_movimentacao === "entrada" || tipo_movimentacao === "saída") {
             query += " AND tipo_movimentacao = ?";
@@ -41,8 +43,9 @@ router.get('/consultar_movimentacoes', async (req, res) => {
 });
 
 router.get('/consultar_saldo', async (req, res) => {
+    const userId = req.user ? req.user.id : req.session.usuario.id;
     try {
-        const resultado = await dbAsync.get('SELECT SUM(valor) AS total FROM movimentacoes', []);
+        const resultado = await dbAsync.get('SELECT SUM(valor) AS total FROM movimentacoes WHERE user_id = ?', [userId]);
         return res.json(resultado);
     } catch (err) {
         return res.status(500).json({ error: err.message });
@@ -50,8 +53,9 @@ router.get('/consultar_saldo', async (req, res) => {
 });
 
 router.get('/consultar_total_saidas_entradas', async (req, res) => {
-    const { tipo_movimentacao, data_inicio, data_final } = req.body;
+    const { tipo_movimentacao, data_inicio, data_final } = req.query;
 
+    
     if (!data_inicio || !data_final) {
         return res.status(400).json({ error: "Parâmetros data_inicio e data_final são obrigatórios." });
     }
@@ -59,13 +63,13 @@ router.get('/consultar_total_saidas_entradas', async (req, res) => {
     if (tipo_movimentacao !== "entrada" && tipo_movimentacao !== "saída") {
         return res.status(400).json({ error: "O parâmetro tipo_movimentacao é obrigatório e deve ser 'entrada' ou 'saída'." });
     }
-
+    const userId = req.user ? req.user.id : req.session.usuario.id;
     try {
         const dataInicioFormatada = formatarData(data_inicio);
         const dataFinalFormatada = formatarData(data_final);
 
-        const query = "SELECT SUM(valor) AS total FROM movimentacoes WHERE data BETWEEN ? AND ? AND tipo_movimentacao = ?";
-        const params = [dataInicioFormatada, dataFinalFormatada, tipo_movimentacao];
+        const query = "SELECT SUM(valor) AS total FROM movimentacoes WHERE user_id = ? AND data BETWEEN ? AND ? AND tipo_movimentacao = ?";
+        const params = [userId, dataInicioFormatada, dataFinalFormatada, tipo_movimentacao];
 
         const resultado = await dbAsync.get(query, params); 
         const total = resultado.total || 0;
@@ -78,18 +82,20 @@ router.get('/consultar_total_saidas_entradas', async (req, res) => {
 
 
 router.get('/consultar_registros_categorias', async (req, res) => {
-    const { categoria, data_inicio, data_final } = req.body;
+    const { categoria, data_inicio, data_final } = req.query;
 
     if (!data_inicio || !data_final || !categoria) {
         return res.status(400).json({ error: "Parâmetros categoria, data_inicio e data_final são obrigatórios." });
     }
 
+    const userId = req.user ? req.user.id : req.session.usuario.id;
     try {
         const dataInicioFormatada = formatarData(data_inicio);
         const dataFinalFormatada = formatarData(data_final);
 
-        const query = "SELECT * FROM movimentacoes WHERE categoria = ? AND data BETWEEN ? AND ?";
-        const params = [categoria, dataInicioFormatada, dataFinalFormatada];
+        // CORRIGIDO: Adicionado "user_id = ? AND"
+        const query = "SELECT * FROM movimentacoes WHERE user_id = ? AND categoria = ? AND data BETWEEN ? AND ?";
+        const params = [userId, categoria, dataInicioFormatada, dataFinalFormatada];
 
         const resultado = await dbAsync.all(query, params); 
         return res.json({ categoria, resultado });
@@ -99,18 +105,19 @@ router.get('/consultar_registros_categorias', async (req, res) => {
 });
 
 router.get('/consultar_total_por_categoria', async (req, res) => {
-    const { categoria, data_inicio, data_final } = req.body;
+    const { categoria, data_inicio, data_final } = req.query;
 
     if (!data_inicio || !data_final || !categoria) {
         return res.status(400).json({ error: "Parâmetros categoria, data_inicio e data_final são obrigatórios." });
     }
-
+    const userId = req.user ? req.user.id : req.session.usuario.id;
     try {
         const dataInicioFormatada = formatarData(data_inicio);
         const dataFinalFormatada = formatarData(data_final);
 
-        const query = "SELECT SUM(valor) AS total FROM movimentacoes WHERE data BETWEEN ? AND ? AND categoria = ?";
-        const params = [dataInicioFormatada, dataFinalFormatada, categoria]; // Corrigido aqui de tipo_movimentacao para categoria
+        // CORRIGIDO: Adicionado "user_id = ? AND"
+        const query = "SELECT SUM(valor) AS total FROM movimentacoes WHERE user_id = ? AND data BETWEEN ? AND ? AND categoria = ?";
+        const params = [userId, dataInicioFormatada, dataFinalFormatada, categoria]; 
 
         const resultado = await dbAsync.get(query, params); 
         const total = resultado.total || 0;
@@ -129,6 +136,8 @@ router.post('/registrar_movimentacao', async (req, res) => {
         return res.status(400).json({ error: 'Campos obrigatórios não preenchidos' });
     }
 
+    const userId = req.user ? req.user.id : req.session.usuario.id;
+
     let valorFinal = Math.abs(Number(valor));
     if (isNaN(valorFinal)) {
         return res.status(400).json({ error: 'Valor inválido' });
@@ -142,8 +151,8 @@ router.post('/registrar_movimentacao', async (req, res) => {
             valorFinal = valorFinal * -1;
         }
 
-        const sql = 'INSERT INTO movimentacoes (titulo, valor, data, tipo_movimentacao, categoria) VALUES (?,?,?,?,?)';
-        const resultado = await dbAsync.run(sql, [titulo, valorFinal, dataFormatada, tipoMovimentacaoNormalizado, categoria]);
+        const sql = 'INSERT INTO movimentacoes (user_id, titulo, valor, data, tipo_movimentacao, categoria) VALUES (?,?,?,?,?,?)';
+        const resultado = await dbAsync.run(sql, [userId,titulo, valorFinal, dataFormatada, tipoMovimentacaoNormalizado, categoria]);
         
         return res.status(201).json({
             id: resultado.lastID,
@@ -159,20 +168,21 @@ router.post('/registrar_movimentacao', async (req, res) => {
     }
 });
 
-// Mudamos de '/deletar_movimentacao' para '/movimentacoes/:id' (padrão REST)
+
 router.delete('/movimentacoes/:id', async (req, res) => {
-    // Pegamos o ID dos parâmetros da URL
+   
     const { id } = req.params;
 
-    // 1. Validação básica de entrada
     if (!id) {
         return res.status(400).json({ erro: "O ID da movimentação é obrigatório." });
     }
 
-    const query = "DELETE FROM movimentacoes WHERE id = ?";
+    const userId = req.user ? req.user.id : req.session.usuario.id;
+
+    const query = "DELETE FROM movimentacoes WHERE id = ? and user_id = ?";
 
     try {
-        const resultado = await dbAsync.run(query, [id]);
+        const resultado = await dbAsync.run(query, [id, userId]);
 
         if (resultado.changes === 0) {
             return res.status(404).json({ erro: "Movimentação não encontrada." });
@@ -188,4 +198,4 @@ router.delete('/movimentacoes/:id', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

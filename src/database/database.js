@@ -17,6 +17,7 @@ db.serialize(() => {
     db.run(`
         CREATE TABLE IF NOT EXISTS movimentacoes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER,
             titulo TEXT NOT NULL,
             valor REAL NOT NULL,
             data TEXT NOT NULL,

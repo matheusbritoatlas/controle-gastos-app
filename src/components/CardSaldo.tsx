@@ -1,48 +1,61 @@
+import { MovimentacoesContext } from "@/context/MovimentacoesContext";
+import { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
-
 
 
 function CardSaldo() {
 
+  const { movimentacoes } = useContext(MovimentacoesContext)
+
+  const totalEntradas = movimentacoes
+  .filter((m: any) => m.tipo === "Entrada")
+  .reduce((soma: number, m: any) => soma + m.valor, 0)
+
+  const totalSaidas = movimentacoes
+  .filter((m: any) => m.tipo === "Saída")
+  .reduce((soma: number, m: any) => soma + m.valor, 0)
+
+  const saldo = totalEntradas - totalSaidas
+
+
+
   return (
 
-<View style={styles.container}>{/* CardSaldo */}
+<View style={styles.container}>
 
-      <Text style={styles.tituloSaldo}
+      <Text style={styles.tituloSaldo}>
+        Seu Saldo
+         </Text>
       
-      > Seu Saldo 
-      
-      </Text>
-
       <Text style={styles.valorSaldo}
 
-      > R$ 1000
+      > R$ {saldo.toFixed(2).replace(".", ",")}
 
       </Text>
  
-    <View  style={styles.detalhes}> {/* detalhes do saldo */}
+    <View  style={styles.detalhes}> 
 
-      <View style={styles.entrada}>{/* view entradas */}
+      <View style={styles.entrada}>
 
 
         <Text style={styles.tituloMiniCard}
         > Entradas 
         </Text>
 
-        <Text style={styles.ValorMiniCard}
-        > R$ 500
-        </Text>  
+        <Text style={styles.ValorMiniCard}>
+             R$ {totalEntradas.toFixed(2).replace(".", ",")}
+        </Text>
+        
+       </View>
 
-      </View>
-
-      <View style={styles.saida}> {/* view saídas */}  
+      <View style={styles.saida}> 
 
         <Text style={styles.tituloMiniCard}
         > Saídas 
         </Text>
         
         <Text style={styles.ValorMiniCard}
-        > R$ 200
+        > R$ {totalSaidas.toFixed(2).replace(".", ",")}
         </Text>    
 
       </View>

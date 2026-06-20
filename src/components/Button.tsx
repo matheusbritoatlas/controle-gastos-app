@@ -1,38 +1,48 @@
 import {
+    Pressable,
+    PressableProps,
     StyleSheet,
     Text,
-    TouchableOpacity,
-    TouchableOpacityProps,
-} from "react-native"
+} from "react-native";
 
-type ButtonProps = TouchableOpacityProps &{
-    label: string
-}
+type ButtonProps = PressableProps & {
+  label: string;
+};
 
-
-export function Button({ label ,...rest}: ButtonProps){
-    return(
-        <TouchableOpacity style= {styles.container} activeOpacity={0.4} {...rest}>
-            <Text style={styles.label}>{label}</Text>
-        </TouchableOpacity>
-    )
-    
+export function Button({
+  label,
+  ...rest
+}: ButtonProps) {
+  return (
+    <Pressable
+      style={({ pressed }) => [
+        styles.container,
+        {
+          opacity: pressed ? 0.4 : 1,
+        },
+      ]}
+      {...rest}
+    >
+      <Text style={styles.label}>
+        {label}
+      </Text>
+    </Pressable>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        width: "100%",
-        height: 48,
-        backgroundColor: "#3366FF",
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius: 8,
-    },
-    label:{
-        color: "#FFFFFF",
-        fontSize: 16,
-        fontWeight: 600,
-    }
-  
-    
-})
+  container: {
+    width: "100%",
+    height: 48,
+    backgroundColor: "#3366FF",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 8,
+  },
+
+  label: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+});

@@ -1,33 +1,28 @@
+import { UsuarioContext } from "@/context/UsuarioContext";
+import { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
+function HeaderDashBoard() {
+  const { nome } = useContext(UsuarioContext);
 
-function HeaderDashBoard() {        
-    return (
 
+  return (
     <View style={styles.header}>
+      <View>
+        <Text style={styles.Saudação}>Olá,</Text>
 
-
-        <View> {/* Header do Dashboard */}   
-        
-        <Text style={styles.Saudação}
-        > Olá,
+        <Text style={styles.NomeUsuario}>
+          {nome}!
         </Text>
+      </View>
 
-         <Text style={styles.NomeUsuario}
-         > Titã!
-         </Text> 
-
-        </View>
-
-        <View style={styles.circulo}> {/* icone perfil */}
-
-        <Text style={styles.NomeUsuario}> TT </Text>
-
-        </View>
-
-
+      <View style={styles.circulo}>
+        <Text style={styles.TextoCirculo}>
+          {nome ? nome.substring(0, 2).toUpperCase() : "TT"}
+        </Text>
+      </View>
     </View>
-    );
+  );
 }
 
 const styles = StyleSheet.create({
@@ -36,7 +31,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     padding: 20,
-   
   },
 
   circulo: {
@@ -45,20 +39,22 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F5E6",
     borderRadius: 25,
     alignItems: "center",
-    justifyContent: "center",   
+    justifyContent: "center",
   },
 
-    Saudação: {
-
+  Saudação: {
     fontSize: 18,
-    },
+  },
 
-    NomeUsuario: {
-
+  NomeUsuario: {
     fontSize: 28,
     fontWeight: "bold",
-    },
+  },
 
+  TextoCirculo: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
 
 export default HeaderDashBoard;
