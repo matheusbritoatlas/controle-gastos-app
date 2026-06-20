@@ -1,5 +1,7 @@
 import express from "express"
-import session from "express-session"     
+import "dotenv/config"
+import session from "express-session"
+import "./config/passport.js";     
 import passport from "passport" // Adicionado para suportar o auth.js
 import authRoutes from "./routes/auth.js";
 import financeiroRoutes from "./routes/financeiro.js"; // Importa as rotas financeiras
@@ -7,10 +9,10 @@ import verificarAutenticacao from "./middlewares/authMiddleware.js"; // Importa 
 
 const app = express(); 
 
-app.use(express.json());   
+app.use(express.json());
 
 app.use(session({
-    secret: "segredo",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
 }));
