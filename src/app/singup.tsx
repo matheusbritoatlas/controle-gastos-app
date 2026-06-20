@@ -26,7 +26,7 @@ export default function Singup() {
   
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
-  function handleSignIn() {
+  async function handleSignIn() {
     if (
       !email.trim() ||
       !password.trim() ||
@@ -40,86 +40,119 @@ export default function Singup() {
     }
 
     if (password !== passwordConfirmation) {
-  return Alert.alert(
-    "Cadastrar",
-    "As senhas nos campos devem ser iguais!"
+      return Alert.alert(
+        "Cadastrar",
+        "As senhas nos campos devem ser iguais!"
+      );
+    }
+
+    try {
+    const response = await fetch(
+      "http://192.168.2.15:3000/cadastro",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nome,
+          email,
+          senha: password,
+        }),
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      return Alert.alert(
+        "Erro",
+        data.erro
+      );
+    }
+
+    setNomeUsuario(nome);
+
+    Alert.alert(
+      "Bem-vindo",
+      `Login realizado com ${email}`
   );
+
+} catch (error) {
+    console.log(error);
+
+    Alert.alert(
+      "Erro",
+      "Não foi possível conectar ao servidor."
+    );
+  }
 }
 
-setNomeUsuario(nome);
-
-Alert.alert(
-  "Bem-vindo",
-  `Login realizado com ${email}`
-);
-  } 
-
-  return (
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.select({
-        ios: "padding",
-        android: "height",
-      })}
+return (
+  <KeyboardAvoidingView
+    style={{ flex: 1 }}
+    behavior={Platform.select({
+      ios: "padding",
+      android: "height",
+    })}
+  >
+    <ScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={false}
     >
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1 }}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={styles.container}>
-          <Image
-            source={require("@/assets/logoatlas.png")}
-            style={styles.illustration}
+      <View style={styles.container}>
+        <Image
+          source={require("@/assets/logoatlas.png")}
+          style={styles.illustration}
+        />
+
+        <Text style={styles.title}>Cadastrar</Text>
+
+        <Text style={styles.subtitle}>
+          Crie uma conta para acessar o aplicativo.
+        </Text>
+
+        <View style={styles.form}>
+          <Input
+            placeholder="Nome"
+            onChangeText={setNome}
           />
 
-          <Text style={styles.title}>Cadastrar</Text>
+          <Input
+            placeholder="E-mail"
+            keyboardType="email-address"
+            onChangeText={setEmail}
+          />
 
-          <Text style={styles.subtitle}>
-            Crie uma conta para acessar o aplicativo.
-          </Text>
+          <Input
+            placeholder="Senha"
+            secureTextEntry
+            onChangeText={setPassword}
+          />
 
-          <View style={styles.form}>
-            <Input
-              placeholder="Nome"
-              onChangeText={setNome}
-            />
+          <Input
+            placeholder="Confirme a Senha"
+            secureTextEntry
+            onChangeText={setPasswordConfirmation}
+          />
 
-            <Input
-              placeholder="E-mail"
-              keyboardType="email-address"
-              onChangeText={setEmail}
-            />
-
-            <Input
-              placeholder="Senha"
-              secureTextEntry
-              onChangeText={setPassword}
-            />
-
-            <Input
-              placeholder="Confirme a Senha"
-              secureTextEntry
-              onChangeText={setPasswordConfirmation}
-            />
-
-            <Button
-              label="Cadastrar"
-              onPress={handleSignIn}
-            />
-          </View>
-
-          <Text style={styles.footerText}>
-            Já tem uma conta?{" "}
-            <Link href="/" style={styles.footerlink}>
-              Entre aqui.
-            </Link>
-          </Text>
+          <Button
+            label="Cadastrar"
+            onPress={handleSignIn}
+          />
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
-  );
-}
+
+        <Text style={styles.footerText}>
+          Já tem uma conta?{" "}
+          <Link href="/" style={styles.footerlink}>
+            Entre aqui.
+          </Link>
+        </Text>
+      </View>
+    </ScrollView>
+  </KeyboardAvoidingView>
+)}
 
 const styles = StyleSheet.create({
   container: {
