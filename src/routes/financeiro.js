@@ -60,7 +60,7 @@ router.get('/consultar_total_saidas_entradas', async (req, res) => {
         return res.status(400).json({ error: "Parâmetros data_inicio e data_final são obrigatórios." });
     }
 
-    if (tipo_movimentacao !== "entrada" && tipo_movimentacao !== "saída") {
+    if (tipo_movimentacao !== "Entrada" && tipo_movimentacao !== "Saída") {
         return res.status(400).json({ error: "O parâmetro tipo_movimentacao é obrigatório e deve ser 'entrada' ou 'saída'." });
     }
     const userId = req.user ? req.user.id : req.session.usuario.id;
@@ -145,22 +145,21 @@ router.post('/registrar_movimentacao', async (req, res) => {
 
     try {
         const dataFormatada = formatarData(data);
-        const tipoMovimentacaoNormalizado = tipo_movimentacao.toLowerCase();
 
-        if (tipoMovimentacaoNormalizado === 'saída' || tipoMovimentacaoNormalizado === 'saida') {
+        if (tipo_movimentacao === 'Saída' || tipo_movimentacao === 'Saida') {
             valorFinal = valorFinal * -1;
         }
 
         const sql = 'INSERT INTO movimentacoes (user_id, titulo, valor, data, tipo_movimentacao, categoria) VALUES (?,?,?,?,?,?)';
-        const resultado = await dbAsync.run(sql, [userId,titulo, valorFinal, dataFormatada, tipoMovimentacaoNormalizado, categoria]);
+        const resultado = await dbAsync.run(sql, [userId,titulo, valorFinal, dataFormatada, tipo_movimentacao, categoria]);
         
         return res.status(201).json({
             id: resultado.lastID,
-            titulo,
+            titulo: titulo,
             valor: valorFinal,
             data: dataFormatada,
-            tipo_movimentacao: tipoMovimentacaoNormalizado,
-            categoria
+            tipo_movimentacao: tipo_movimentacao,
+            categoria: categoria
         });
     
     } catch (erro) {
