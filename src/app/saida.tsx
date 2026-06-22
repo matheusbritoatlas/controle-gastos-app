@@ -2,9 +2,8 @@ import { Button } from "@/components/Button";
 import CategoriaSaida from "@/components/CategoriaSaida";
 import HeaderFormulario from "@/components/HeaderFormulario";
 import { Input } from "@/components/input";
-import { MovimentacoesContext } from "@/context/MovimentacoesContext";
 import { router } from "expo-router";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import {
     Alert,
     KeyboardAvoidingView,
@@ -26,8 +25,6 @@ function saida () {
     const [detalhes, setDetalhes] = useState("")
 
     const [categoria, setCategoria] = useState("")
-
-    const { adicionarMovimentacao } =useContext(MovimentacoesContext)
 
     const [erro, setErro] = useState("")
 
@@ -56,7 +53,7 @@ function saida () {
     }
 }
    
-    function handleSalvarSaida() {
+    async function handleSalvarSaida() {
 
 
          if (partes.length !== 3) {
@@ -86,13 +83,29 @@ function saida () {
         }
        
 
-adicionarMovimentacao({
-  titulo,
-  categoria,
-  data,
-  valor: valorNumero,
-  tipo: "Saída",
-    })
+const response = await fetch(
+  "http://localhost:3000/financeiro/registrar_movimentacao",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      titulo,
+      valor: valorNumero,
+      data,
+      tipo_movimentacao: "Saída",
+      categoria,
+    }),
+  }
+);
+
+const resultado = await response.json();
+
+if (!response.ok) {
+  setErro(resultado.error || "Erro ao salvar");
+  return;
+}
     
     Alert.alert("Sucesso","Gasto adicionado com sucesso!",
   [
@@ -101,10 +114,7 @@ adicionarMovimentacao({
       onPress: () => router.push("/dashboard"),
     },
   ]
-    )
-
-  router.push("/dashboard")
-    }
+    )}
 
     return (
 

@@ -1,4 +1,3 @@
-import { router } from "expo-router";
 import { useContext, useState } from "react";
 
 import {
@@ -8,8 +7,10 @@ import {
     ScrollView,
     StyleSheet,
     Text,
-    View,
+    View
 } from "react-native";
+
+import { router } from "expo-router";
 
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -58,7 +59,7 @@ function entrada() {
     }
 }
    
-  function handleSalvar() {
+ async function handleSalvar() {
 
     if (partes.length !== 3) {
              setErro("Data inválida")
@@ -86,28 +87,44 @@ function entrada() {
     return
     }
 
-    adicionarMovimentacao({
-    titulo: titulo,
-    categoria: "Receita",
-    data: data,
-    valor : valorNumero,
-    tipo: "Entrada",
-  })
-    Alert.alert(
-    "Sucesso",
-    "Entrada adicionada com sucesso!",
-    [
-        {
-        text: "OK",
-        onPress: () => router.push("/dashboard"),
-        },
-    ]
-    )
-    
-    router.push("/dashboard")
+const response = await fetch(
+  "http://localhost:3000/financeiro/registrar_movimentacao",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      titulo,
+      valor: valorNumero,
+      data,
+      tipo_movimentacao: "entrada",
+      categoria: "Receita",
+    }),
   }
+);
 
-    return (
+const resultado = await response.json();
+
+if (!response.ok) {
+  setErro(resultado.error || "Erro ao salvar");
+  return;
+}
+ }
+
+Alert.alert(
+  "Sucesso",
+  "Entrada adicionada com sucesso!",
+  [
+    {
+      text: "OK",
+      onPress: () => router.push("/dashboard"),
+    },
+  ]
+
+);
+
+return (
 
     <SafeAreaView style={{ flex: 1, backgroundColor: "#22C55E",}}
   edges={["top"]}>

@@ -1,5 +1,4 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
-import { LineChart } from "react-native-chart-kit";
 
     type EvolucaoFinanceiraProps = { 
     labels: string[]
@@ -34,20 +33,7 @@ import { LineChart } from "react-native-chart-kit";
 
             <View style={styles.grafico}>  
 
-                 <LineChart
-
-                    data={data}
-                    width={larguraTela - 80}
-                    height={180}
-                    chartConfig={{
-                    backgroundColor: "#ffffff",
-                    backgroundGradientFrom: "#ffffff",
-                    backgroundGradientTo: "#ffffff",
-                    decimalPlaces: 0,
-                    color: (opacity = 1) => `rgba(76, 175, 80, ${opacity})`,
-
-                    }}
-                 />
+                 <Text>Gráfico temporariamente removido</Text>
 
             </View>
 

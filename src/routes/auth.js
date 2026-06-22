@@ -1,5 +1,5 @@
-import express from "express";
 import bcrypt from "bcrypt";
+import express from "express";
 import passport from "passport";
 import { dbAsync as db } from '../database/database.js';
 
@@ -117,15 +117,21 @@ router.get(
 // CALLBACK GOOGLE
 // =========================
 router.get(
-    "/auth/google/callback",
-    passport.authenticate("google", {
-        failureRedirect: "/erro"
-    }),
-    (req, res) => {
-        res.json({
-            mensagem: "Login Google realizado"
-        });
-    }
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/erro"
+  }),
+  (req, res) => {
+
+    console.log("USUARIO LOGADO:");
+    console.log(req.user);
+
+    res.json({
+      mensagem: "Login Google realizado",
+      usuario: req.user
+    });
+
+  }
 );
 
 // =========================
@@ -137,9 +143,9 @@ router.get("/logout", (req, res) => {
             mensagem: "Logout realizado"
         });
     });
-});
+})
 
 // =========================
 // EXPORTA ROTAS
 // =========================
-export default router;
+export default router

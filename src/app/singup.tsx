@@ -48,7 +48,7 @@ export default function Singup() {
 
     try {
     const response = await fetch(
-      "http://192.168.2.15:3000/cadastro",
+      "http://localhost:3000/cadastro",
       {
         method: "POST",
         headers: {

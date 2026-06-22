@@ -1,4 +1,4 @@
-import express from "express"
+import express from "express";
 import { dbAsync } from '../database/database.js'; // Ajustado para require
 
 const router = express.Router();
@@ -21,7 +21,7 @@ router.get('/consultar_movimentacoes', async (req, res) => {
         return res.status(400).json({ error: "Parâmetros data_inicio e data_final são obrigatórios." });
     }
 
-    const userId = req.user ? req.user.id : req.session.usuario.id;
+    const userId = 1;//const userId = req.user ? req.user.id : req.session.usuario.id;
 
     try {
         const dataInicioFormatada = formatarData(data_inicio);
@@ -136,7 +136,7 @@ router.post('/registrar_movimentacao', async (req, res) => {
         return res.status(400).json({ error: 'Campos obrigatórios não preenchidos' });
     }
 
-    const userId = req.user ? req.user.id : req.session.usuario.id;
+    const userId = 1; //const userId = req.user ? req.user.id : req.session.usuario.id;
 
     let valorFinal = Math.abs(Number(valor));
     if (isNaN(valorFinal)) {

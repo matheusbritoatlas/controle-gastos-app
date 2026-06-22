@@ -1,14 +1,15 @@
-import express from "express"
-import "dotenv/config"
-import session from "express-session"
-import "./config/passport.js";     
-import passport from "passport" // Adicionado para suportar o auth.js
+import cors from "cors";
+import "dotenv/config";
+import express from "express";
+import session from "express-session";
+import passport from "passport"; // Adicionado para suportar o auth.js
+import "./config/passport.js";
 import authRoutes from "./routes/auth.js";
 import financeiroRoutes from "./routes/financeiro.js"; // Importa as rotas financeiras
-import verificarAutenticacao from "./middlewares/authMiddleware.js"; // Importa o middleware de proteção
 
-const app = express(); 
+const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.use(session({
@@ -26,7 +27,7 @@ app.use(authRoutes);
 
 // Uso das rotas protegidas
 // O middleware é injetado aqui. Qualquer requisição para "/financeiro/..." passará por ele primeiro.
-app.use('/financeiro', verificarAutenticacao, financeiroRoutes);
+app.use('/financeiro', financeiroRoutes);
 
 app.listen(3000, () => {
     console.log("Servidor rodando na porta 3000");
