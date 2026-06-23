@@ -1,26 +1,30 @@
 import {
-    Pressable,
-    PressableProps,
-    StyleSheet,
-    Text,
+  Pressable,
+  PressableProps,
+  StyleSheet,
+  Text,
 } from "react-native";
 
 type ButtonProps = PressableProps & {
   label: string;
+  cor?: string;
 };
 
 export function Button({
   label,
+  cor = "#3366FF",
   ...rest
 }: ButtonProps) {
+
   return (
     <Pressable
       style={({ pressed }) => [
-        styles.container,
-        {
-          opacity: pressed ? 0.4 : 1,
-        },
-      ]}
+      styles.container,
+      {
+        backgroundColor: cor,
+        opacity: pressed ? 0.4 : 1,
+      },
+    ]}
       {...rest}
     >
       <Text style={styles.label}>

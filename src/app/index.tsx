@@ -1,7 +1,10 @@
 import { Button } from "@/components/Button";
 import { Input } from "@/components/input";
+import { UsuarioContext } from "@/context/UsuarioContext";
+import { AntDesign } from "@expo/vector-icons";
 import { Link, router } from "expo-router";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Pressable } from "react-native";
 
 import {
   Alert,
@@ -17,6 +20,7 @@ import {
 export default function Index() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setNome } = useContext(UsuarioContext);
 
  async function handleSignIn() {
 
@@ -56,7 +60,9 @@ export default function Index() {
     localStorage.setItem(
       "usuario",
       JSON.stringify(resultado.usuario)
+      
     );
+    setNome(resultado.usuario.nome);
 
     Alert.alert(
       "Sucesso",
@@ -118,7 +124,28 @@ export default function Index() {
             <Button
               label="Entrar"
               onPress={handleSignIn}
+              
             />
+            <Text style={styles.ou}>
+              ───── OU ─────
+            </Text>
+
+           <Pressable
+          style={styles.googleButton}
+          onPress={() => {
+            console.log("Google");
+          }}
+        >
+          <AntDesign
+            name="google"
+            size={20}
+            color="#4285F4"
+          />
+
+          <Text style={styles.googleText}>
+            Entrar com Google
+          </Text>
+        </Pressable>
           </View>
 
           <Text style={styles.footerText}>
@@ -184,4 +211,31 @@ const styles = StyleSheet.create({
     color: "#032AD7",
     fontWeight: "700",
   },
+  googleButton: {
+  height: 50,
+  backgroundColor: "#FFFFFF",
+  borderWidth: 1,
+  borderColor: "#DADCE0",
+  borderRadius: 8,
+
+  flexDirection: "row",
+  alignItems: "center",
+  justifyContent: "center",
+
+  gap: 12,
+
+},
+
+googleText: {
+  color: "#3C4043",
+  fontSize: 14,
+  fontWeight: "500",
+
+},
+
+ou: {
+  textAlign: "center",
+  marginVertical: 16,
+  color: "#6B7280",
+},
 });

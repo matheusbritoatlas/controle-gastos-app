@@ -11,7 +11,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View,
+  View
 } from "react-native";
 
 export default function Singup() {
@@ -137,16 +137,19 @@ return (
             onChangeText={setPasswordConfirmation}
           />
 
-          <Button
-            label="Cadastrar"
-            onPress={handleSignIn}
-          />
+                      <Button
+              label="Cadastrar"
+              cor="#2563EB"
+              onPress={handleSignIn}
+            />
+
         </View>
 
         <Text style={styles.footerText}>
           Já tem uma conta?{" "}
           <Link href="/" style={styles.footerlink}>
             Entre aqui.
+
           </Link>
         </Text>
       </View>
@@ -194,4 +197,32 @@ const styles = StyleSheet.create({
     color: "#032AD7",
     fontWeight: "700",
   },
+
+  ou: {
+  textAlign: "center",
+  marginVertical: 16,
+  color: "#6B7280",
+  },
+
+    googleButton: {
+    height: 48,
+    borderWidth: 1,
+    borderColor: "#D1D5DB",
+    borderRadius: 8,
+
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+
+    gap: 10,
+
+    backgroundColor: "#FFFFFF",
+  },
+
+  googleText: {
+    fontSize: 16,
+    fontWeight: "600",
+  },
+
+
 });
