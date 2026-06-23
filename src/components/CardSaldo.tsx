@@ -10,11 +10,17 @@ function CardSaldo() {
 
 const carregarDados = async () => {
 
-  const usuario = JSON.parse(
-    localStorage.getItem("usuario") || "{}"
-  );
+const usuarioResponse = await fetch(
+  "http://localhost:3000/usuario",
+  {
+    credentials: "include",
+  }
+);
 
-  const userId = usuario.id;
+const usuario = await usuarioResponse.json();
+
+const userId = usuario.id;
+
 
   try {
 

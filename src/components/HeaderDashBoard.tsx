@@ -1,9 +1,39 @@
 import { UsuarioContext } from "@/context/UsuarioContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 function HeaderDashBoard() {
-  const { nome } = useContext(UsuarioContext);
+const { nome, setNome } = useContext(UsuarioContext);
+
+useEffect(() => {
+
+  async function carregarUsuario() {
+
+    try {
+
+      const response = await fetch(
+        "http://localhost:3000/usuario",
+        {
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) return;
+
+      const usuario = await response.json();
+
+      setNome(usuario.nome);
+
+    } catch (erro) {
+
+      console.log("Erro ao carregar usuário:", erro);
+
+    }
+  }
+
+  carregarUsuario();
+
+}, []);
 
 
   return (

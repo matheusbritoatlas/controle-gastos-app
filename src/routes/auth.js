@@ -118,14 +118,27 @@ router.get(
     console.log("USUARIO LOGADO:");
     console.log(req.user);
 
-    res.json({
-      mensagem: "Login Google realizado",
-      usuario: req.user
+    req.session.usuario = {
+    id: req.user.id,
+    nome: req.user.nome,
+    email: req.user.email,
+    };
+
+    res.redirect("http://localhost:8081/dashboard");
+
+    }
+    );
+    router.get("/usuario", (req, res) => {
+
+    if (!req.session.usuario) {
+        return res.status(401).json({
+        erro: "Usuário não autenticado"
+        });
+    }
+
+    return res.json(req.session.usuario);
+
     });
-
-  }
-);
-
 // =========================
 // LOGOUT
 // =========================

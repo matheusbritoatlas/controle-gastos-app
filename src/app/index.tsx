@@ -130,22 +130,23 @@ export default function Index() {
               ───── OU ─────
             </Text>
 
-           <Pressable
-          style={styles.googleButton}
-          onPress={() => {
-            console.log("Google");
-          }}
-        >
-          <AntDesign
-            name="google"
-            size={20}
-            color="#4285F4"
-          />
+                <Pressable
+        style={styles.googleButton}
+        onPress={() => {
+          window.location.href =
+            "http://localhost:3000/auth/google";
+        }}
+      >
+        <AntDesign
+          name="google"
+          size={20}
+          color="#4285F4"
+        />
 
-          <Text style={styles.googleText}>
-            Entrar com Google
-          </Text>
-        </Pressable>
+        <Text style={styles.googleText}>
+          Entrar com Google
+        </Text>
+      </Pressable>
           </View>
 
           <Text style={styles.footerText}>
