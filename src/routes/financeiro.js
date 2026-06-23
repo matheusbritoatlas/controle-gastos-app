@@ -22,7 +22,11 @@ router.get('/consultar_movimentacoes', verificarAutenticacao, async (req, res) =
         return res.status(400).json({ error: "Parâmetros data_inicio e data_final são obrigatórios." });
     }
 
+<<<<<<< HEAD
     const userId = req.user.id;//const userId = req.user ? req.user.id : req.session.usuario.id;
+=======
+    const userId = req.user ? req.user.id : req.session.usuario.id;
+>>>>>>> ae324b1 ( funçãoes no dashboard funcionando com o a backend normalmente)
 
     try {
         const dataInicioFormatada = formatarData(data_inicio);
@@ -43,14 +47,82 @@ router.get('/consultar_movimentacoes', verificarAutenticacao, async (req, res) =
     }
 });
 
+<<<<<<< HEAD
 router.get('/consultar_saldo', verificarAutenticacao, async (req, res) => {
     const userId = req.user.id;
+=======
+router.get('/consultar_saldo', async (req, res) => {
+
+   const userId = req.query.id;
+
+console.log("ID RECEBIDO:", userId);
+
+>>>>>>> ae324b1 ( funçãoes no dashboard funcionando com o a backend normalmente)
     try {
-        const resultado = await dbAsync.get('SELECT SUM(valor) AS total FROM movimentacoes WHERE user_id = ?', [userId]);
-        return res.json(resultado);
-    } catch (err) {
-        return res.status(500).json({ error: err.message });
+
+        const resultado = await dbAsync.get(
+            `
+            SELECT SUM(valor) as saldo
+            FROM movimentacoes
+            WHERE user_id = ?
+            `,
+            [userId]
+            
+        );
+        console.log("RESULTADO:", resultado);
+
+        return res.json({
+            saldo: resultado.saldo || 0
+        });
+
+    } catch (erro) {
+
+        return res.status(500).json({
+            erro: erro.message
+        });
+
     }
+
+});
+router.get('/consultar_totais', async (req, res) => {
+
+    const userId = req.query.id;
+
+    try {
+
+        const entradas = await dbAsync.get(
+            `
+            SELECT SUM(valor) as total
+            FROM movimentacoes
+            WHERE user_id = ?
+            AND valor > 0
+            `,
+            [userId]
+        );
+
+        const saidas = await dbAsync.get(
+            `
+            SELECT SUM(ABS(valor)) as total
+            FROM movimentacoes
+            WHERE user_id = ?
+            AND valor < 0
+            `,
+            [userId]
+        );
+
+        return res.json({
+            entradas: entradas.total || 0,
+            saidas: saidas.total || 0
+        });
+
+    } catch (erro) {
+
+        return res.status(500).json({
+            erro: erro.message
+        });
+
+    }
+
 });
 
 router.get('/consultar_total_saidas_entradas', verificarAutenticacao, async (req, res) => {
@@ -129,7 +201,12 @@ router.get('/consultar_total_por_categoria', verificarAutenticacao, async (req, 
     }
 });
 
+<<<<<<< HEAD
 router.post('/registrar_movimentacao', verificarAutenticacao, async (req, res) => {
+=======
+
+router.post('/registrar_movimentacao', async (req, res) => {
+>>>>>>> ae324b1 ( funçãoes no dashboard funcionando com o a backend normalmente)
 
     const { titulo, valor, data, tipo_movimentacao, categoria } = req.body; 
     
@@ -137,7 +214,11 @@ router.post('/registrar_movimentacao', verificarAutenticacao, async (req, res) =
         return res.status(400).json({ error: 'Campos obrigatórios não preenchidos' });
     }
 
+<<<<<<< HEAD
     const userId = req.user.id;
+=======
+    const userId = req.body.userId;
+>>>>>>> ae324b1 ( funçãoes no dashboard funcionando com o a backend normalmente)
 
     let valorFinal = Math.abs(Number(valor));
     if (isNaN(valorFinal)) {
@@ -152,6 +233,19 @@ router.post('/registrar_movimentacao', verificarAutenticacao, async (req, res) =
         }
 
         const sql = 'INSERT INTO movimentacoes (user_id, titulo, valor, data, tipo_movimentacao, categoria) VALUES (?,?,?,?,?,?)';
+        console.log("SALVANDO:");
+        console.log({
+            userId,
+            titulo,
+            valorFinal,
+            dataFormatada,
+            tipo_movimentacao,
+            categoria
+        });
+            sql,
+    [userId, titulo, valorFinal, dataFormatada, tipo_movimentacao, categoria]
+     console.log("TIPO:", tipo_movimentacao);
+
         const resultado = await dbAsync.run(sql, [userId,titulo, valorFinal, dataFormatada, tipo_movimentacao, categoria]);
         
         return res.status(201).json({

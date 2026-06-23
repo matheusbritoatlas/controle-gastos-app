@@ -75,12 +75,14 @@ function saida () {
     return
     }
      setErro("")
-
      
          if (isNaN(valorNumero)) {
         setErro("Digite um valor válido")
         return
         }
+        const usuario = JSON.parse(
+            localStorage.getItem("usuario") || "{}"
+        );
        
 
 const response = await fetch(
@@ -91,12 +93,14 @@ const response = await fetch(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      titulo,
-      valor: valorNumero,
-      data,
-      tipo_movimentacao: "Saída",
-      categoria,
+    userId: usuario.id,
+    titulo,
+    valor: valorNumero,
+    data,
+    tipo_movimentacao: "Saída",
+    categoria,
     }),
+
   }
 );
 

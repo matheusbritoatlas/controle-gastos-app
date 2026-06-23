@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 
 import {
     Alert,
@@ -18,7 +18,6 @@ import { Button } from "@/components/Button";
 import HeaderFormulario from "@/components/HeaderFormulario";
 import { Input } from "@/components/input";
 
-import { MovimentacoesContext } from "@/context/MovimentacoesContext";
 
 function entrada() {
     
@@ -31,7 +30,7 @@ function entrada() {
 
   const [detalhes, setDetalhes] = useState("")
 
-  const { adicionarMovimentacao } = useContext(MovimentacoesContext)
+
 
   const [erro, setErro] = useState("")
 
@@ -86,6 +85,9 @@ function entrada() {
     setErro("Digite um valor válido")
     return
     }
+    const usuario = JSON.parse(
+  localStorage.getItem("usuario") || "{}"
+);
 
 const response = await fetch(
   "http://localhost:3000/financeiro/registrar_movimentacao",
@@ -95,6 +97,7 @@ const response = await fetch(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      userId: usuario.id,
       titulo,
       valor: valorNumero,
       data,
