@@ -1,61 +1,22 @@
-
-import { useEffect, useState } from "react";
+import { MovimentacoesContext } from "@/context/MovimentacoesContext";
+import { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 
 function CardSaldo() {
 
-const [saldo, setSaldo] = useState(0)
-const [totalEntradas, setTotalEntradas] = useState(0)
-const [totalSaidas, setTotalSaidas] = useState(0)
+  const { movimentacoes } = useContext(MovimentacoesContext)
 
-useEffect(() => {
+  const totalEntradas = movimentacoes
+  .filter((m: any) => m.tipo === "Entrada")
+  .reduce((soma: number, m: any) => soma + m.valor, 0)
 
-  console.log("CARD SALDO MONTADO");
+  const totalSaidas = movimentacoes
+  .filter((m: any) => m.tipo === "Saída")
+  .reduce((soma: number, m: any) => soma + m.valor, 0)
 
-  async function carregarDados() {
+  const saldo = totalEntradas - totalSaidas
 
-    console.log("CARREGANDO DADOS");
-
-    try {
-
-      const usuario = JSON.parse(
-        localStorage.getItem("usuario") || "{}"
-      );
-
-      console.log("USUARIO:", usuario);
-
-      const respostaSaldo = await fetch(
-        `http://localhost:3000/financeiro/consultar_saldo?id=${usuario.id}`
-      );
-
-      const saldoJson = await respostaSaldo.json();
-
-      console.log("SALDO:", saldoJson);
-
-
-      setSaldo(saldoJson.saldo || 0);
-      const respostaTotais = await fetch(
-  `http://localhost:3000/financeiro/consultar_totais?id=${usuario.id}`
-    );
-
-    const totaisJson = await respostaTotais.json();
-
-    console.log("TOTAIS:", totaisJson);
-
-    setTotalEntradas(totaisJson.entradas || 0);
-    setTotalSaidas(totaisJson.saidas || 0);
-
-    } catch (erro) {
-
-      console.log("ERRO:", erro);
-
-    }
-  }
-
-  carregarDados();
-
-}, []);
 
 
   return (

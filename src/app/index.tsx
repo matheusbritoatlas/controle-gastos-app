@@ -4,63 +4,35 @@ import { Link, router } from "expo-router";
 import { useState } from "react";
 
 import {
-  Alert,
-  Image,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
+    Alert,
+    Image,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
 } from "react-native";
 
 export default function Index() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
- async function handleSignIn() {
-  if (!email.trim() || !password.trim()) {
-    return Alert.alert(
-      "Entrar",
-      "Preencha o e-mail e a senha para continuar!"
-    );
-  }
 
-  try {
-    const resposta = await fetch(
-      "http://localhost:3000/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          senha: password,
-        }),
-      }
-    );
-    const dados = await resposta.json();
-
-      localStorage.setItem(
-        "usuario",
-        JSON.stringify(dados.usuario)
+  function handleSignIn() {
+    if (!email.trim() || !password.trim()) {
+      return Alert.alert(
+        "Entrar",
+        "Preencha o e-mail e a senha para continuar!"
       );
-
-      console.log("STATUS:", resposta.status);
-          
-    if (!resposta.ok) {
-      return Alert.alert("Erro", dados.erro);
     }
-    Alert.alert("Sucesso", dados.mensagem);
-    router.push("/dashboard");
-  } catch (erro) {
-    console.log(erro);
+
     Alert.alert(
-      "Erro",
-      "Não foi possível conectar ao servidor"
+      "Bem-vindo",
+      `Login realizado com ${email}`
     );
+
+    router.push("/dashboard");
   }
-}
 
   return (
     <KeyboardAvoidingView

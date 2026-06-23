@@ -63,27 +63,28 @@ router.post("/login", async (req, res, next) => {
             return res.status(400).json({ erro: "Senha incorreta" });
         }
 
-
-
-        // 5. Salva os dados do usuário na sessão
+// 5. Salva os dados do usuário na sessão
 req.session.usuario = {
     id: usuario.id,
     nome: usuario.nome,
     email: usuario.email
 };
 
-console.log("LOGIN EXECUTADO");
-console.log(req.session.usuario);
+const userSession = {
+    id: usuario.id,
+    nome: usuario.nome,
+    email: usuario.email
+};
 
-// 6. Retorna o sucesso do login
-return res.json({
-    mensagem: "Login realizado com sucesso",
-    usuario: {
-        id: usuario.id,
-        nome: usuario.nome,
-        email: usuario.email
-    }
-});
+        // Vincula manualmente o usuário à sessão do Passport
+        req.login(userSession, (err) => {
+            if (err) return next(err);
+            
+            return res.json({
+                mensagem: "Login realizado com sucesso",
+                usuario: userSession
+            });
+        });
 
     } catch (erro) {
         console.error("Erro no login:", erro);
