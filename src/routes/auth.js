@@ -47,59 +47,42 @@ router.post("/cadastro", async (req, res) => {
 // =========================
 // LOGIN (Atualizado para Async/Await)
 // =========================
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => {
     const { email, senha } = req.body;
 
     try {
-        // 1. Procura o usuário no banco usando o await do dbAsync
-        const usuario = await db.get(
-            `
-            SELECT * FROM users
-            WHERE email = ?
-            `,
-            [email]
-        );
+        const usuario = await db.get("SELECT * FROM users WHERE email = ?", [email]);
 
-        // 2. Se o usuário não for encontrado
         if (!usuario) {
-            return res.status(400).json({
-                erro: "Usuário não encontrado"
-            });
+            return res.status(400).json({ erro: "Usuário não encontrado" });
         }
 
-        // 3. Compara a senha enviada com a criptografada
         const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
 
-        // 4. Se a senha estiver incorreta
         if (!senhaCorreta) {
-            return res.status(400).json({
-                erro: "Senha incorreta"
-            });
+            return res.status(400).json({ erro: "Senha incorreta" });
         }
 
-        // 5. Salva os dados do usuário na sessão
-        req.session.usuario = {
+        // Criando um objeto limpo para passar ao Passport
+        const userSession = {
             id: usuario.id,
             nome: usuario.nome,
             email: usuario.email
         };
 
-        // 6. Retorna o sucesso do login
-        return res.json({
-            mensagem: "Login realizado com sucesso",
-            usuario: {
-                id: usuario.id,
-                nome: usuario.nome,
-                email: usuario.email
-            }
+        // Vincula manualmente o usuário à sessão do Passport
+        req.login(userSession, (err) => {
+            if (err) return next(err);
+            
+            return res.json({
+                mensagem: "Login realizado com sucesso",
+                usuario: userSession
+            });
         });
 
     } catch (erro) {
-        // Trata erros inesperados do banco ou servidor
         console.error("Erro no login:", erro);
-        return res.status(500).json({
-            erro: "Erro no servidor"
-        });
+        return res.status(500).json({ erro: "Erro no servidor" });
     }
 });
 

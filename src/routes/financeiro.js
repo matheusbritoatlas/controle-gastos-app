@@ -1,5 +1,6 @@
 import express from "express";
 import { dbAsync } from '../database/database.js'; // Ajustado para require
+import verificarAutenticacao from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -14,14 +15,14 @@ function formatarData(dataInput) {
     return `${ano}-${mes}-${dia}`;
 }
 
-router.get('/consultar_movimentacoes', async (req, res) => {
+router.get('/consultar_movimentacoes', verificarAutenticacao, async (req, res) => {
     const { tipo_movimentacao, data_inicio, data_final } = req.query;
 
     if (!data_inicio || !data_final) {
         return res.status(400).json({ error: "Parâmetros data_inicio e data_final são obrigatórios." });
     }
 
-    const userId = 1;//const userId = req.user ? req.user.id : req.session.usuario.id;
+    const userId = req.user.id;//const userId = req.user ? req.user.id : req.session.usuario.id;
 
     try {
         const dataInicioFormatada = formatarData(data_inicio);
@@ -42,8 +43,8 @@ router.get('/consultar_movimentacoes', async (req, res) => {
     }
 });
 
-router.get('/consultar_saldo', async (req, res) => {
-    const userId = req.user ? req.user.id : req.session.usuario.id;
+router.get('/consultar_saldo', verificarAutenticacao, async (req, res) => {
+    const userId = req.user.id;
     try {
         const resultado = await dbAsync.get('SELECT SUM(valor) AS total FROM movimentacoes WHERE user_id = ?', [userId]);
         return res.json(resultado);
@@ -52,7 +53,7 @@ router.get('/consultar_saldo', async (req, res) => {
     }
 });
 
-router.get('/consultar_total_saidas_entradas', async (req, res) => {
+router.get('/consultar_total_saidas_entradas', verificarAutenticacao, async (req, res) => {
     const { tipo_movimentacao, data_inicio, data_final } = req.query;
 
     
@@ -63,7 +64,7 @@ router.get('/consultar_total_saidas_entradas', async (req, res) => {
     if (tipo_movimentacao !== "Entrada" && tipo_movimentacao !== "Saída") {
         return res.status(400).json({ error: "O parâmetro tipo_movimentacao é obrigatório e deve ser 'entrada' ou 'saída'." });
     }
-    const userId = req.user ? req.user.id : req.session.usuario.id;
+    const userId = req.user.id;
     try {
         const dataInicioFormatada = formatarData(data_inicio);
         const dataFinalFormatada = formatarData(data_final);
@@ -81,14 +82,14 @@ router.get('/consultar_total_saidas_entradas', async (req, res) => {
 });
 
 
-router.get('/consultar_registros_categorias', async (req, res) => {
+router.get('/consultar_registros_categorias', verificarAutenticacao, async (req, res) => {
     const { categoria, data_inicio, data_final } = req.query;
 
     if (!data_inicio || !data_final || !categoria) {
         return res.status(400).json({ error: "Parâmetros categoria, data_inicio e data_final são obrigatórios." });
     }
 
-    const userId = req.user ? req.user.id : req.session.usuario.id;
+    const userId = req.user.id;
     try {
         const dataInicioFormatada = formatarData(data_inicio);
         const dataFinalFormatada = formatarData(data_final);
@@ -104,13 +105,13 @@ router.get('/consultar_registros_categorias', async (req, res) => {
     }
 });
 
-router.get('/consultar_total_por_categoria', async (req, res) => {
+router.get('/consultar_total_por_categoria', verificarAutenticacao, async (req, res) => {
     const { categoria, data_inicio, data_final } = req.query;
 
     if (!data_inicio || !data_final || !categoria) {
         return res.status(400).json({ error: "Parâmetros categoria, data_inicio e data_final são obrigatórios." });
     }
-    const userId = req.user ? req.user.id : req.session.usuario.id;
+    const userId = req.user.id;
     try {
         const dataInicioFormatada = formatarData(data_inicio);
         const dataFinalFormatada = formatarData(data_final);
@@ -128,7 +129,7 @@ router.get('/consultar_total_por_categoria', async (req, res) => {
     }
 });
 
-router.post('/registrar_movimentacao', async (req, res) => {
+router.post('/registrar_movimentacao', verificarAutenticacao, async (req, res) => {
 
     const { titulo, valor, data, tipo_movimentacao, categoria } = req.body; 
     
@@ -136,7 +137,7 @@ router.post('/registrar_movimentacao', async (req, res) => {
         return res.status(400).json({ error: 'Campos obrigatórios não preenchidos' });
     }
 
-    const userId = 1; //const userId = req.user ? req.user.id : req.session.usuario.id;
+    const userId = req.user.id;
 
     let valorFinal = Math.abs(Number(valor));
     if (isNaN(valorFinal)) {
@@ -168,7 +169,7 @@ router.post('/registrar_movimentacao', async (req, res) => {
 });
 
 
-router.delete('/movimentacoes/:id', async (req, res) => {
+router.delete('/movimentacoes/:id', verificarAutenticacao, async (req, res) => {
    
     const { id } = req.params;
 
@@ -176,7 +177,7 @@ router.delete('/movimentacoes/:id', async (req, res) => {
         return res.status(400).json({ erro: "O ID da movimentação é obrigatório." });
     }
 
-    const userId = req.user ? req.user.id : req.session.usuario.id;
+    const userId = req.user.id;
 
     const query = "DELETE FROM movimentacoes WHERE id = ? and user_id = ?";
 
