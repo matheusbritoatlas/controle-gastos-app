@@ -76,17 +76,34 @@ const userSession = {
     email: usuario.email
 };
 
-        // Vincula manualmente o usuário à sessão do Passport
-        req.login(userSession, (err) => {
+console.log("ANTES LOGIN");
+console.log("SESSION ID:", req.sessionID);
+console.log("SESSION:", req.session);
 
-    console.log("LOGIN FEITO");
-    console.log("SESSION:", req.sessionID);
-    console.log("USER:", req.user);
+req.login(userSession, (err) => {
 
-    return res.json({
-        mensagem: "Login realizado com sucesso",
-        usuario: userSession
+    if (err) {
+        console.log("ERRO LOGIN:", err);
+
+        return res.status(500).json({
+            erro: "Erro ao criar sessão"
+        });
+    }
+
+    req.session.save(() => {
+
+        console.log("LOGIN FEITO");
+        console.log("SESSION:", req.sessionID);
+        console.log("USER:", req.user);
+        console.log("SESSION DATA:", req.session);
+
+        return res.json({
+            mensagem: "Login realizado com sucesso",
+            usuario: userSession
+        });
+
     });
+
 });
 
     } catch (erro) {
@@ -128,17 +145,22 @@ router.get(
 
     }
     );
-    router.get("/usuario", (req, res) => {
+   router.get("/usuario", (req, res) => {
+
+    console.log("COOKIE RECEBIDO:");
+    console.log(req.headers.cookie);
+
+    console.log("SESSION:");
+    console.log(req.session);
 
     if (!req.session.usuario) {
         return res.status(401).json({
-        erro: "Usuário não autenticado"
+            erro: "Usuário não autenticado"
         });
     }
 
     return res.json(req.session.usuario);
-
-    });
+});
 // =========================
 // LOGOUT
 // =========================

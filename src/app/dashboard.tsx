@@ -1,4 +1,5 @@
 import EvolucaoFinanceira from "@/components/EvolucaoFinanceira";
+import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -7,8 +8,40 @@ import CardSaldo from "../components/CardSaldo";
 import HeaderDashBoard from "../components/HeaderDashBoard";
 
 function Dashboard() {
-  const meses = ["Jan", "Fev", "Mar", "Abr", "Mai"];
-  const valores = [500, 800, 700, 1200, 3239];
+ const [entradas, setEntradas] = useState(0);
+const [saidas, setSaidas] = useState(0);
+
+useEffect(() => {
+  async function carregarTotais() {
+  try {
+
+    const usuarioTexto = window.localStorage.getItem("usuario");
+
+console.log(usuarioTexto);
+
+const usuario = JSON.parse(
+  window.localStorage.getItem("usuario") || "{}"
+);
+
+console.log("USUARIO LOCAL:", usuario);
+
+    const response = await fetch(
+      `http://localhost:3000/financeiro/consultar_totais?id=${usuario.id}`
+    );
+
+    const dados = await response.json();
+
+    console.log("TOTAIS DASHBOARD:", dados);
+
+    setEntradas(dados.entradas || 0);
+    setSaidas(dados.saidas || 0);
+
+  } catch (erro) {
+    console.log(erro);
+  }
+}
+  carregarTotais();
+}, []);
 
   return (
     <SafeAreaView
@@ -30,9 +63,9 @@ function Dashboard() {
 
         <View style={styles.graficoContainer}>
           <EvolucaoFinanceira
-            labels={meses}
-            dados={valores}
-          />
+          labels={["Entradas", "Saídas"]}
+          dados={[entradas, saidas]}
+        />
         </View>
       </ScrollView>
     </SafeAreaView>

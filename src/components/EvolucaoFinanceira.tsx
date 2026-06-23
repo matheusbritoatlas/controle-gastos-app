@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { BarChart } from "react-native-chart-kit";
 
     type EvolucaoFinanceiraProps = { 
     labels: string[]
@@ -20,7 +21,9 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
                  },
             ],
         };
-            
+            console.log("LABELS:", labels);
+                console.log("DADOS:", dados);
+                
         return (
 
           <View style={styles.container}>
@@ -33,7 +36,29 @@ import { Dimensions, StyleSheet, Text, View } from "react-native";
 
             <View style={styles.grafico}>  
 
-                 <Text>Gráfico temporariamente removido</Text>
+               <BarChart
+                data={data}
+                width={larguraTela - 80}
+                height={220}
+                fromZero
+                yAxisLabel="R$ "
+                yAxisSuffix=""
+                chartConfig={{
+                    backgroundGradientFrom: "#FFFFFF",
+                    backgroundGradientTo: "#FFFFFF",
+                    decimalPlaces: 0,
+
+                    color: (opacity = 1) =>
+                    `rgba(34, 197, 94, ${opacity})`,
+
+                    labelColor: (opacity = 1) =>
+                    `rgba(0, 0, 0, ${opacity})`,
+                }}
+                style={{
+                    marginTop: 10,
+                    borderRadius: 16,
+                }}
+                />
 
             </View>
 

@@ -10,18 +10,17 @@ function CardSaldo() {
 
 const carregarDados = async () => {
 
-const usuarioResponse = await fetch(
-  "http://localhost:3000/usuario",
-  {
-    credentials: "include",
-  }
-);
+const usuarioTexto =
+  window.localStorage.getItem("usuario");
 
-const usuario = await usuarioResponse.json();
+if (!usuarioTexto) return;
+
+const usuario = JSON.parse(usuarioTexto);
 
 const userId = usuario.id;
 
-
+console.log("USUARIO CARD:", usuario);
+console.log("ID CARD:", userId);
   try {
 
     const saldoResponse = await fetch(
