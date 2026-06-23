@@ -97,7 +97,7 @@ const response = await fetch(
       titulo,
       valor: valorNumero,
       data,
-      tipo_movimentacao: "Saída",
+      tipo_movimentacao: "saida",
       categoria,
     }),
   }
@@ -114,7 +114,7 @@ adicionarMovimentacao({
   categoria,
   data,
   valor: valorNumero,
-  tipo: "Saída",
+  tipo: "saida",
 });
     
     Alert.alert("Sucesso","Gasto adicionado com sucesso!",

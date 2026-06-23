@@ -1,8 +1,8 @@
 import {
-    Pressable,
-    StyleSheet,
-    Text,
-    View,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 
 type CardLancamentoProps = {
@@ -10,7 +10,7 @@ type CardLancamentoProps = {
   categoria: string;
   data: string;
   valor: number;
-  tipo: "Entrada" | "Saída";
+  tipo: "entrada" | "saida";
   onExcluir: () => void;
 };
 
@@ -27,13 +27,13 @@ function CardLancamento({
       <View
         style={[
           styles.iconeContainer,
-          tipo === "Entrada"
-            ? styles.iconeEntrada
-            : styles.iconeSaida,
+              tipo === "entrada"
+      ? styles.iconeEntrada
+      : styles.iconeSaida
         ]}
       >
         <Text style={styles.iconeTexto}>
-          {tipo === "Entrada" ? "+" : "-"}
+          {tipo === "entrada" ? "+" : "-"}
         </Text>
       </View>
 
@@ -49,7 +49,7 @@ function CardLancamento({
         <Text
           style={[
             styles.valor,
-            tipo === "Entrada"
+            tipo === "entrada"
               ? styles.valorEntrada
               : styles.valorSaida,
           ]}

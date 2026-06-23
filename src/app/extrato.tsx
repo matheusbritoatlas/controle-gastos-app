@@ -1,7 +1,6 @@
 import CardLancamento from "@/components/CardLancamento";
 import HeaderExtrato from "@/components/HeaderExtrato";
-import { MovimentacoesContext } from "@/context/MovimentacoesContext";
-import { useContext } from "react";
+import { useEffect, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -11,10 +10,61 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 
 function Extrato() {
-  const {
-    movimentacoes,
-    removerMovimentacao,
-  } = useContext(MovimentacoesContext);
+
+  async function excluirMovimentacao(id: number) {
+
+  try {
+
+    const response = await fetch(
+      `http://localhost:3000/financeiro/movimentacoes/${id}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Erro ao excluir");
+    }
+
+    carregarExtrato();
+
+  } catch (erro) {
+
+    console.log("Erro ao excluir:", erro);
+
+  }
+}
+ 
+
+  const [movimentacoes, setMovimentacoes] = useState([]);
+  useEffect(() => {
+  carregarExtrato();
+}, []);
+
+async function carregarExtrato() {
+
+  try {
+
+    const response = await fetch(
+      "http://localhost:3000/financeiro/consultar_extrato",
+      {
+        credentials: "include",
+      }
+    );
+
+    const dados = await response.json();
+    
+    console.log(dados);
+
+    setMovimentacoes(dados);
+
+  } catch (erro) {
+
+    console.log("Erro ao carregar extrato:", erro);
+
+  }
+}
 
   return (
     <SafeAreaView
@@ -28,18 +78,18 @@ function Extrato() {
         <HeaderExtrato />
 
         <View style={styles.container}>
-          {movimentacoes.map((lancamento: any, index: any, ) => (
-            <CardLancamento
-              key={index}
-              titulo={lancamento.titulo}
-              categoria={lancamento.categoria}
-              data={lancamento.data}
-              valor={lancamento.valor}
-              tipo={lancamento.tipo}
-              onExcluir={() =>
-                removerMovimentacao(index)
-              }
-            />
+          {movimentacoes.map((lancamento: any) => (
+
+          <CardLancamento
+      key={lancamento.id}
+      titulo={lancamento.titulo}
+      categoria={lancamento.categoria}
+      data={lancamento.data}
+      valor={lancamento.valor}
+      tipo={lancamento.tipo_movimentacao}
+      onExcluir={() => excluirMovimentacao(lancamento.id)}
+    />
+
           ))}
         </View>
         

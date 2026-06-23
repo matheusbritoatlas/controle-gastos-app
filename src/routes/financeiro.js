@@ -14,6 +14,37 @@ function formatarData(dataInput) {
     
     return `${ano}-${mes}-${dia}`;
 }
+router.get(
+  "/consultar_extrato",
+  verificarAutenticacao,
+  async (req, res) => {
+
+    const userId = req.user
+      ? req.user.id
+      : req.session.usuario.id;
+
+    try {
+
+      const resultado = await dbAsync.all(
+        `
+        SELECT *
+        FROM movimentacoes
+        WHERE user_id = ?
+        ORDER BY data DESC
+        `,
+        [userId]
+      );
+
+      return res.json(resultado);
+
+    } catch (erro) {
+
+      return res.status(500).json({
+        erro: erro.message
+      });
+
+    }
+});
 
 router.get('/consultar_movimentacoes', verificarAutenticacao, async (req, res) => {
     const { tipo_movimentacao, data_inicio, data_final } = req.query;
@@ -219,7 +250,7 @@ router.post('/registrar_movimentacao', async (req, res) => {
     try {
         const dataFormatada = formatarData(data);
 
-        if (tipo_movimentacao === 'Saída' || tipo_movimentacao === 'Saida') {
+        if (tipo_movimentacao === "saida" || tipo_movimentacao === 'Saida') {
             valorFinal = valorFinal * -1;
         }
 
@@ -262,8 +293,9 @@ router.delete('/movimentacoes/:id', verificarAutenticacao, async (req, res) => {
         return res.status(400).json({ erro: "O ID da movimentação é obrigatório." });
     }
 
-    const userId = req.user.id;
-
+    const userId = req.user
+  ? req.user.id
+  : req.session.usuario.id;
     const query = "DELETE FROM movimentacoes WHERE id = ? and user_id = ?";
 
     try {

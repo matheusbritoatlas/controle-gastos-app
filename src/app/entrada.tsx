@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
 
 import {
-    Alert,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    View
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View
 } from "react-native";
 
 import { router } from "expo-router";
