@@ -195,14 +195,20 @@ router.get('/consultar_total_por_categoria', verificarAutenticacao, async (req, 
 });
 
 router.post('/registrar_movimentacao', async (req, res) => {
-
+    console.log("BODY RECEBIDO:", req.body);
     const { titulo, valor, data, tipo_movimentacao, categoria } = req.body; 
     
     if (!titulo || !valor || !data || !tipo_movimentacao || !categoria) {
         return res.status(400).json({ error: 'Campos obrigatórios não preenchidos' });
     }
 
-    const userId = req.body.userId;
+   
+    console.log("REQ.USER:", req.user);
+        console.log("AUTH:", req.isAuthenticated());
+
+        const userId = req.user
+        ? req.user.id
+        : req.session.usuario.id;
 
 
     let valorFinal = Math.abs(Number(valor));
@@ -232,7 +238,7 @@ router.post('/registrar_movimentacao', async (req, res) => {
      console.log("TIPO:", tipo_movimentacao);
 
         const resultado = await dbAsync.run(sql, [userId,titulo, valorFinal, dataFormatada, tipo_movimentacao, categoria]);
-        
+        console.log("RESULTADO INSERT:", resultado);
         return res.status(201).json({
             id: resultado.lastID,
             titulo: titulo,

@@ -94,6 +94,7 @@ const response = await fetch(
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({
       titulo,
       valor: valorNumero,
@@ -104,13 +105,23 @@ const response = await fetch(
   }
 );
 
-const resultado = await response.json();
+const texto = await response.text();
+
+console.log("STATUS:", response.status);
+console.log("RESPOSTA BRUTA:", texto);
 
 if (!response.ok) {
-  setErro(resultado.error || "Erro ao salvar");
+  setErro("Erro ao salvar");
   return;
 }
- }
+
+adicionarMovimentacao({
+  titulo,
+  categoria: "Receita",
+  data,
+  valor: valorNumero,
+  tipo: "Entrada",
+});
 
 Alert.alert(
   "Sucesso",
@@ -118,11 +129,11 @@ Alert.alert(
   [
     {
       text: "OK",
-      onPress: () => router.push("/dashboard"),
+      onPress: () =>router.replace("/dashboard")
     },
   ]
+)}
 
-);
 
 return (
 

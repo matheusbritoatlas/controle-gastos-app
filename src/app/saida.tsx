@@ -2,8 +2,9 @@ import { Button } from "@/components/Button";
 import CategoriaSaida from "@/components/CategoriaSaida";
 import HeaderFormulario from "@/components/HeaderFormulario";
 import { Input } from "@/components/input";
+import { MovimentacoesContext } from "@/context/MovimentacoesContext";
 import { router } from "expo-router";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
     Alert,
     KeyboardAvoidingView,
@@ -34,6 +35,7 @@ function saida () {
 
     const [dia, mes, ano] = partes.map(Number)
     
+    const { adicionarMovimentacao } = useContext(MovimentacoesContext);
 
 
     function formatarData(texto: string) {
@@ -90,6 +92,7 @@ const response = await fetch(
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
     body: JSON.stringify({
       titulo,
       valor: valorNumero,
@@ -99,19 +102,26 @@ const response = await fetch(
     }),
   }
 );
-
 const resultado = await response.json();
 
 if (!response.ok) {
   setErro(resultado.error || "Erro ao salvar");
   return;
+  
 }
+adicionarMovimentacao({
+  titulo,
+  categoria,
+  data,
+  valor: valorNumero,
+  tipo: "Saída",
+});
     
     Alert.alert("Sucesso","Gasto adicionado com sucesso!",
   [
     {
       text: "OK",
-      onPress: () => router.push("/dashboard"),
+      onPress: () => router.replace("/dashboard")
     },
   ]
     )}

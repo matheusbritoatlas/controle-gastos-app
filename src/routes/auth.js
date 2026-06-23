@@ -78,13 +78,16 @@ const userSession = {
 
         // Vincula manualmente o usuário à sessão do Passport
         req.login(userSession, (err) => {
-            if (err) return next(err);
-            
-            return res.json({
-                mensagem: "Login realizado com sucesso",
-                usuario: userSession
-            });
-        });
+
+    console.log("LOGIN FEITO");
+    console.log("SESSION:", req.sessionID);
+    console.log("USER:", req.user);
+
+    return res.json({
+        mensagem: "Login realizado com sucesso",
+        usuario: userSession
+    });
+});
 
     } catch (erro) {
         console.error("Erro no login:", erro);

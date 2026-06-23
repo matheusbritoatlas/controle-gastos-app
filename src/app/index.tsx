@@ -4,35 +4,78 @@ import { Link, router } from "expo-router";
 import { useState } from "react";
 
 import {
-    Alert,
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
+  Alert,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 
 export default function Index() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleSignIn() {
-    if (!email.trim() || !password.trim()) {
+ async function handleSignIn() {
+
+  if (!email.trim() || !password.trim()) {
+    return Alert.alert(
+      "Entrar",
+      "Preencha o e-mail e a senha."
+    );
+  }
+
+  try {
+
+    const response = await fetch(
+      "http://localhost:3000/login",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          email,
+          senha: password,
+        }),
+      }
+    );
+
+    const resultado = await response.json();
+
+    if (!response.ok) {
       return Alert.alert(
-        "Entrar",
-        "Preencha o e-mail e a senha para continuar!"
+        "Erro",
+        resultado.erro
       );
     }
 
+    localStorage.setItem(
+      "usuario",
+      JSON.stringify(resultado.usuario)
+    );
+
     Alert.alert(
-      "Bem-vindo",
-      `Login realizado com ${email}`
+      "Sucesso",
+      "Login realizado!"
     );
 
     router.push("/dashboard");
+
+  } catch (erro) {
+
+    console.log(erro);
+
+    Alert.alert(
+      "Erro",
+      "Não foi possível conectar ao servidor."
+    );
+
   }
+}
 
   return (
     <KeyboardAvoidingView

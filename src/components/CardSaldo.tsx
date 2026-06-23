@@ -1,71 +1,92 @@
-import { MovimentacoesContext } from "@/context/MovimentacoesContext";
-import { useContext } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-
 
 function CardSaldo() {
 
-  const { movimentacoes } = useContext(MovimentacoesContext)
+  const [saldo, setSaldo] = useState(0);
+  const [entradas, setEntradas] = useState(0);
+  const [saidas, setSaidas] = useState(0);
 
-  const totalEntradas = movimentacoes
-  .filter((m: any) => m.tipo === "Entrada")
-  .reduce((soma: number, m: any) => soma + m.valor, 0)
+const carregarDados = async () => {
 
-  const totalSaidas = movimentacoes
-  .filter((m: any) => m.tipo === "Saída")
-  .reduce((soma: number, m: any) => soma + m.valor, 0)
+  const usuario = JSON.parse(
+    localStorage.getItem("usuario") || "{}"
+  );
 
-  const saldo = totalEntradas - totalSaidas
+  const userId = usuario.id;
 
+  try {
 
+    const saldoResponse = await fetch(
+      `http://localhost:3000/financeiro/consultar_saldo?id=${userId}`
+    );
 
+    const saldoData = await saldoResponse.json();
+
+    const totaisResponse = await fetch(
+      `http://localhost:3000/financeiro/consultar_totais?id=${userId}`
+    );
+
+    const totaisData = await totaisResponse.json();
+
+    setSaldo(saldoData.saldo || 0);
+    setEntradas(totaisData.entradas || 0);
+    setSaidas(totaisData.saidas || 0);
+
+  } catch (erro) {
+    console.log("Erro:", erro);
+  }
+};
+
+useFocusEffect(
+  useCallback(() => {
+    carregarDados();
+  }, [])
+);
   return (
 
 <View style={styles.container}>
 
       <Text style={styles.tituloSaldo}>
         Seu Saldo
-         </Text>
-      
-      <Text style={styles.valorSaldo}
-
-      > R$ {saldo.toFixed(2).replace(".", ",")}
-
       </Text>
- 
-    <View  style={styles.detalhes}> 
 
-      <View style={styles.entrada}>
+      <Text style={styles.valorSaldo}>
+        R$ {saldo.toFixed(2).replace(".", ",")}
+      </Text>
 
+      <View style={styles.detalhes}>
 
-        <Text style={styles.tituloMiniCard}
-        > Entradas 
-        </Text>
+        <View style={styles.entrada}>
 
-        <Text style={styles.ValorMiniCard}>
-             R$ {totalEntradas.toFixed(2).replace(".", ",")}
-        </Text>
-        
-       </View>
+          <Text style={styles.tituloMiniCard}>
+            Entradas
+          </Text>
 
-      <View style={styles.saida}> 
+          <Text style={styles.ValorMiniCard}>
+            R$ {entradas.toFixed(2).replace(".", ",")}
+          </Text>
 
-        <Text style={styles.tituloMiniCard}
-        > Saídas 
-        </Text>
-        
-        <Text style={styles.ValorMiniCard}
-        > R$ {totalSaidas.toFixed(2).replace(".", ",")}
-        </Text>    
+        </View>
+
+        <View style={styles.saida}>
+
+          <Text style={styles.tituloMiniCard}>
+            Saídas
+          </Text>
+
+          <Text style={styles.ValorMiniCard}>
+            R$ {saidas.toFixed(2).replace(".", ",")}
+          </Text>
+
+        </View>
 
       </View>
 
     </View>
- </View>
-
-    );
-}  
-
+  );
+}
 
    const styles = StyleSheet.create({
 

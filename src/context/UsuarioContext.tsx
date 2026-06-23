@@ -9,7 +9,14 @@ export const UsuarioContext = createContext<any>(null);
 export function UsuarioProvider({
   children,
 }: UsuarioProviderProps) {
-  const [nome, setNome] = useState("Titã");
+
+  const usuarioSalvo = localStorage.getItem("usuario");
+
+  const [nome, setNome] = useState(
+    usuarioSalvo
+      ? JSON.parse(usuarioSalvo).nome
+      : ""
+  );
 
   return (
     <UsuarioContext.Provider
