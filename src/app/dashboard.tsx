@@ -1,5 +1,6 @@
 import EvolucaoFinanceira from "@/components/EvolucaoFinanceira";
-import { useEffect, useState } from "react";
+import { useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -11,37 +12,45 @@ function Dashboard() {
  const [entradas, setEntradas] = useState(0);
 const [saidas, setSaidas] = useState(0);
 
-useEffect(() => {
-  async function carregarTotais() {
-  try {
+useFocusEffect(
+  useCallback(() => {
 
-    const usuarioTexto = window.localStorage.getItem("usuario");
+    async function carregarTotais() {
 
-console.log(usuarioTexto);
+      try {
 
-const usuario = JSON.parse(
-  window.localStorage.getItem("usuario") || "{}"
+        const response = await fetch(
+          "http://localhost:3000/financeiro/consultar_totais",
+          {
+            credentials: "include",
+          }
+        );
+
+        const dados = await response.json();
+
+        console.log(
+          "TOTAIS DASHBOARD:",
+          dados
+        );
+
+        setEntradas(dados.entradas || 0);
+        setSaidas(dados.saidas || 0);
+
+      } catch (erro) {
+
+        console.log(erro);
+
+      }
+
+    }
+
+    carregarTotais();
+
+  }, [])
 );
 
-console.log("USUARIO LOCAL:", usuario);
-
-    const response = await fetch(
-      `http://localhost:3000/financeiro/consultar_totais?id=${usuario.id}`
-    );
-
-    const dados = await response.json();
-
-    console.log("TOTAIS DASHBOARD:", dados);
-
-    setEntradas(dados.entradas || 0);
-    setSaidas(dados.saidas || 0);
-
-  } catch (erro) {
-    console.log(erro);
-  }
-}
-  carregarTotais();
-}, []);
+  console.log("ENTRADAS STATE:", entradas);
+  console.log("SAIDAS STATE:", saidas);
 
   return (
     <SafeAreaView

@@ -1,56 +1,76 @@
 import { UsuarioContext } from "@/context/UsuarioContext";
+import { router } from "expo-router";
 import { useContext, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import {
+  Pressable,
+  StyleSheet,
+  Text,
+  View
+} from "react-native";
 
 function HeaderDashBoard() {
-const { nome, setNome } = useContext(UsuarioContext);
+  const { nome, setNome } = useContext(UsuarioContext);
 
-useEffect(() => {
+  useEffect(() => {
+    async function carregarUsuario() {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/usuario",
+          {
+            credentials: "include",
+          }
+        );
 
-  async function carregarUsuario() {
+        if (!response.ok) return;
 
-    try {
+        const usuario = await response.json();
 
-      const response = await fetch(
-        "http://localhost:3000/usuario",
-        {
-          credentials: "include",
-        }
-      );
+        setNome(usuario.nome);
 
-      if (!response.ok) return;
-
-      const usuario = await response.json();
-
-      setNome(usuario.nome);
-
-    } catch (erro) {
-
-      console.log("Erro ao carregar usuário:", erro);
-
+      } catch (erro) {
+        console.log(
+          "Erro ao carregar usuário:",
+          erro
+        );
+      }
     }
-  }
 
-  carregarUsuario();
+    carregarUsuario();
+  }, []);
 
-}, []);
+ async function sair() {
 
+  console.log("CLICOU");
+
+  localStorage.removeItem("usuario");
+
+  setNome("");
+
+  router.push("/");
+
+}
 
   return (
     <View style={styles.header}>
       <View>
-        <Text style={styles.Saudação}>Olá,</Text>
+        <Text style={styles.Saudacao}>
+          Olá,
+        </Text>
 
         <Text style={styles.NomeUsuario}>
           {nome}!
         </Text>
       </View>
 
-      <View style={styles.circulo}>
-        <Text style={styles.TextoCirculo}>
-          {nome ? nome.substring(0, 2).toUpperCase() : "TT"}
-        </Text>
-      </View>
+      <Pressable onPress={sair}>
+        <View style={styles.circulo}>
+          <Text style={styles.TextoCirculo}>
+            {nome
+              ? nome.substring(0, 2).toUpperCase()
+              : "TT"}
+          </Text>
+        </View>
+      </Pressable>
     </View>
   );
 }
@@ -72,7 +92,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  Saudação: {
+  Saudacao: {
     fontSize: 18,
   },
 

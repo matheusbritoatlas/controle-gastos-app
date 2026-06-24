@@ -9,31 +9,28 @@ function CardSaldo() {
   const [saidas, setSaidas] = useState(0);
 
 const carregarDados = async () => {
-
-const usuarioTexto =
-  window.localStorage.getItem("usuario");
-
-if (!usuarioTexto) return;
-
-const usuario = JSON.parse(usuarioTexto);
-
-const userId = usuario.id;
-
-console.log("USUARIO CARD:", usuario);
-console.log("ID CARD:", userId);
   try {
 
     const saldoResponse = await fetch(
-      `http://localhost:3000/financeiro/consultar_saldo?id=${userId}`
+      "http://localhost:3000/financeiro/consultar_saldo",
+      {
+        credentials: "include",
+      }
     );
 
     const saldoData = await saldoResponse.json();
 
     const totaisResponse = await fetch(
-      `http://localhost:3000/financeiro/consultar_totais?id=${userId}`
+      "http://localhost:3000/financeiro/consultar_totais",
+      {
+        credentials: "include",
+      }
     );
 
     const totaisData = await totaisResponse.json();
+
+    console.log("SALDO:", saldoData);
+    console.log("TOTAIS:", totaisData);
 
     setSaldo(saldoData.saldo || 0);
     setEntradas(totaisData.entradas || 0);

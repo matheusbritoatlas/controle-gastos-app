@@ -76,9 +76,14 @@ router.get('/consultar_movimentacoes', verificarAutenticacao, async (req, res) =
 });
 
 
-router.get('/consultar_saldo', async (req, res) => {
+router.get(
+  "/consultar_saldo",
+  verificarAutenticacao,
+  async (req, res) => {
 
-   const userId = req.query.id;
+    const userId = req.user
+      ? req.user.id
+      : req.session.usuario.id;
 
 console.log("ID RECEBIDO:", userId);
 
@@ -108,9 +113,14 @@ console.log("ID RECEBIDO:", userId);
     }
 
 });
-router.get('/consultar_totais', async (req, res) => {
+router.get(
+  "/consultar_totais",
+  verificarAutenticacao,
+  async (req, res) => {
 
-    const userId = req.query.id;
+    const userId = req.user
+      ? req.user.id
+      : req.session.usuario.id;
 
     try {
 
